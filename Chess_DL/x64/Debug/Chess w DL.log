@@ -1,2 +1,5 @@
-﻿  test.cpp
+﻿  chessboard.cpp
+  main.cpp
+  test.cpp
+  Generating Code...
   Chess w DL.vcxproj -> C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\x64\Debug\Chess_DL.exe
