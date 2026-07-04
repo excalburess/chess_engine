@@ -3,3 +3,6 @@ bin/
 obj/
 *.user
 *.suo
+
+# Third-party dependencies
+stb_image.h
