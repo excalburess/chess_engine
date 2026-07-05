@@ -38,7 +38,40 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="sprites.jpg">
+    <Image Include="bb.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="bk.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="bn.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="bp.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="bq.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="br.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="wb.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="wk.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="wn.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="wp.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="wq.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="wr.png">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>

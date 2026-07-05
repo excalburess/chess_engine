@@ -1,5 +1,45 @@
 ﻿  chessboard.cpp
   main.cpp
-  test.cpp
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\main.cpp(78,43): warning C4244: 'argument': conversion from 'int' to 'GLfloat', possible loss of data
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\main.cpp(78,40): warning C4244: 'argument': conversion from 'int' to 'GLfloat', possible loss of data
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\main.cpp(79,50): warning C4244: 'argument': conversion from 'int' to 'GLfloat', possible loss of data
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\main.cpp(79,42): warning C4244: 'argument': conversion from 'int' to 'GLfloat', possible loss of data
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\main.cpp(80,52): warning C4244: 'argument': conversion from 'int' to 'GLfloat', possible loss of data
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\main.cpp(80,42): warning C4244: 'argument': conversion from 'int' to 'GLfloat', possible loss of data
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\main.cpp(81,45): warning C4244: 'argument': conversion from 'int' to 'GLfloat', possible loss of data
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\main.cpp(81,40): warning C4244: 'argument': conversion from 'int' to 'GLfloat', possible loss of data
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\main.cpp(95,24): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\main.cpp(95,18): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\main.cpp(95,12): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\main.cpp(109,33): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\main.cpp(109,24): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\main.cpp(109,15): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\main.cpp(113,31): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\main.cpp(113,23): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\main.cpp(113,15): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\main.cpp(116,52): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\main.cpp(116,24): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\main.cpp(117,58): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\main.cpp(117,24): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\main.cpp(118,58): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\main.cpp(118,24): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\main.cpp(119,52): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\main.cpp(119,24): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\main.cpp(128,70): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\main.cpp(128,51): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\main.cpp(128,23): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\main.cpp(134,52): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\main.cpp(134,33): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\main.cpp(134,13): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\main.cpp(136,58): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\main.cpp(136,23): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\main.cpp(137,64): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\main.cpp(137,23): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\main.cpp(138,64): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\main.cpp(138,23): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\main.cpp(139,58): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\main.cpp(139,23): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\main.cpp(185,19): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\main.cpp(186,19): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
   Generating Code...
   Chess w DL.vcxproj -> C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\x64\Debug\Chess_DL.exe

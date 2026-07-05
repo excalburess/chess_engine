@@ -153,7 +153,18 @@
     <ClInclude Include="stb_image.h" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="sprites.jpg" />
+    <Image Include="bb.png" />
+    <Image Include="bk.png" />
+    <Image Include="bn.png" />
+    <Image Include="bp.png" />
+    <Image Include="bq.png" />
+    <Image Include="br.png" />
+    <Image Include="wb.png" />
+    <Image Include="wk.png" />
+    <Image Include="wn.png" />
+    <Image Include="wp.png" />
+    <Image Include="wq.png" />
+    <Image Include="wr.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
