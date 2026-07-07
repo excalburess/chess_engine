@@ -20,13 +20,15 @@ double board_x = 0.5 * (width - height);
 double board_y = 0;
 double board_size = height;
 
-double square_size = board_size * 0.9 * 0.125; //square size (0.9 alters how "zoomed" board is)
-double square_x = board_x + board_size * 0.05;
-double square_y = board_y + board_size * 0.05;
+double square_size = board_size * 0.9 * 0.125; //square size (0.9 alters how "zoomed" board is) (90% of board size is used 10% = boarder)
+double square_x = board_x + board_size * 0.05; //(to centre grid evenly the remaining 90% is split between x and y coordinates) (top left corner of chessboard)
+double square_y = board_y + board_size * 0.05; //centres grid to top left of board coord. i.e if 90% used 10%/2 = 5% so board_y + board_size * 0.05 (board_y uses offset to push it)
 
 //selection logic
 int select_x = -1;
 int select_y = -1;
+
+
 
 //file loading
 GLuint loadTexture(const char *filename)
@@ -73,14 +75,27 @@ void drawPiece(int x, int y, int size, int piece)
 	case WHITE_KING:
 	case WHITE_QUEEN:
 		glColor3f(1.0f, 1.0f, 1.0f);
-		glBindTexture(GL_TEXTURE_2D, pieceTexture[piece]); //loads texture for quad
-		glBegin(GL_QUADS);
-		glTexCoord2f(0.0f, 0.0f); glVertex2f(x, y);               // top left
-		glTexCoord2f(1.0f, 0.0f); glVertex2f(x + size, y);        // top right
-		glTexCoord2f(1.0f, 1.0f); glVertex2f(x + size, y + size); // bottom right
-		glTexCoord2f(0.0f, 1.0f); glVertex2f(x, y + size);        // bottom left
-		glEnd();
-		glBindTexture(GL_TEXTURE_2D, 0);
+		if (square_size < 0) {
+			glBindTexture(GL_TEXTURE_2D, pieceTexture[piece]); //loads texture for quad
+			glBegin(GL_QUADS);
+			glTexCoord2f(0.0f, 0.0f); glVertex2f(x, y);               // top left
+			glTexCoord2f(-1.0f, 0.0f); glVertex2f(x + size, y);        // top right
+			glTexCoord2f(-1.0f, -1.0f); glVertex2f(x + size, y + size); // bottom right
+			glTexCoord2f(0.0f, -1.0f); glVertex2f(x, y + size);        // bottom left
+			glEnd();
+			glBindTexture(GL_TEXTURE_2D, 0);
+		}
+		else
+		{
+			glBindTexture(GL_TEXTURE_2D, pieceTexture[piece]); //loads texture for quad
+			glBegin(GL_QUADS);
+			glTexCoord2f(0.0f, 0.0f); glVertex2f(x, y);               // top left
+			glTexCoord2f(1.0f, 0.0f); glVertex2f(x + size, y);        // top right
+			glTexCoord2f(1.0f, 1.0f); glVertex2f(x + size, y + size); // bottom right
+			glTexCoord2f(0.0f, 1.0f); glVertex2f(x, y + size);        // bottom left
+			glEnd();
+			glBindTexture(GL_TEXTURE_2D, 0);
+		}
 		break;
 	case EMPTY:
 	default:
@@ -144,9 +159,15 @@ void draw()
 	glutSwapBuffers();
 }
 
+//keydown decleration
+void keydown(unsigned char key, int x, int y);
+
 void resize(int w, int h) { //resizes the window for chess board
 	width = w;
 	height = h;
+
+	//recalc board params if flipped to counter switching of sides
+	bool isFlipped = square_size < 0;
 
 	if (width > height)
 	{
@@ -165,6 +186,8 @@ void resize(int w, int h) { //resizes the window for chess board
 	square_x = board_x + board_size * 0.05;
 	square_y = board_y + board_size * 0.05;
 
+	if (isFlipped) keydown(32, 0, 0);
+
 	glViewport(0, 0, width, height);
 	glLoadIdentity();
 	gluOrtho2D(0, width, height, 0);
@@ -178,12 +201,38 @@ void timer(int value)
 	glutTimerFunc(16, timer, NULL);
 }
 
+//click controls 
+
 void mouse(int button, int state, int x, int y)
 {
 	if (state == GLUT_DOWN && button == GLUT_LEFT_BUTTON)
 	{
-		select_x = floor((x - square_x) / square_size);
-		select_y = floor((y - square_y) / square_size);
+		//get coords of board click (square)
+		int click_x = floor((x - square_x) / square_size); //floor select max value less than or equal to expression. This essentially shifts coords relative to grids top left corner instead of origin
+		int click_y = floor((y - square_y) / square_size); // square_size = how many squares accross is it as a float. floor just truncates in case we are in middle of square
+
+
+		//if piece is valid lets move it
+		if (select_x < 8 && select_x >= 0 && select_y < 8 && select_y >= 0 && game.getPiece(select_x + 8 * select_y) != EMPTY)
+		{																														//since get piece takes a square in and we use 1 << square as the array is from 0-64
+			if (click_x >= 0 && click_x < 8 && click_y >= 0 && click_y < 8)														//getPiece (2,2) would be at array position 2 x and 2 y meaning 2*8 = 16 + 2 = 18																																  
+			{																													//1 << 18 = 17 which is @ position 2, 2 on bitboard taking element there
+				game.setPiece(click_x + 8 * click_y, game.getPiece(select_x + 8 * select_y));
+				game.setPiece(select_x + 8 * select_y, EMPTY);
+			}
+
+			select_x = -1;
+			select_y = -1;
+		}
+
+		//otherwise select the square that was clicked
+
+		else
+
+		{
+			select_x = click_x;
+			select_y = click_y;
+		}
 	}
 		
 }
@@ -191,6 +240,15 @@ void mouse(int button, int state, int x, int y)
 void keydown(unsigned char key, int x, int y)
 {
 	if (key == 27) glutLeaveMainLoop();
+	if (key == 32)
+	{
+		square_x += square_size * 8;
+		square_y += square_size * 8;
+		square_size *= -1; //square_size negative flips checkers
+
+
+	}
+
 }
 
 
