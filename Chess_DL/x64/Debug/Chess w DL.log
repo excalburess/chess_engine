@@ -1,4 +1,61 @@
-﻿  main.cpp
+﻿  chessboard.cpp
+  main.cpp
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\chessboard.cpp(54,24): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\chessboard.cpp(54,34): error C2143: syntax error: missing ',' before '&'
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\chessboard.cpp(54,19): error C2511: 'void Chessboard::Move(const int)': overloaded member function not found in 'Chessboard'
+      C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\chessboard.h(51,7):
+      see declaration of 'Chessboard'
+  
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\chessboard.cpp(57,14): error C2597: illegal reference to non-static member 'Chessboard::stackIndex'
+      C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\chessboard.cpp(57,14):
+      see declaration of 'Chessboard::stackIndex'
+  
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\chessboard.cpp(57,14): error C3867: 'Chessboard::stackIndex': non-standard syntax; use '&' to create a pointer to member
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\chessboard.cpp(57,14): error C2568: '+': unable to resolve function overload
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\chessboard.cpp(57,28): error C7732: expected an expression before ']'
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\chessboard.cpp(57,3): error C2597: illegal reference to non-static member 'Chessboard::stateStack'
+      C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\chessboard.cpp(57,3):
+      see declaration of 'Chessboard::stateStack'
+  
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\chessboard.cpp(57,3): error C3867: 'Chessboard::stateStack': non-standard syntax; use '&' to create a pointer to member
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\chessboard.cpp(57,3): error C2568: '[': unable to resolve function overload
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\chessboard.cpp(57,43): error C2597: illegal reference to non-static member 'Chessboard::stackIndex'
+      C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\chessboard.cpp(57,43):
+      see declaration of 'Chessboard::stackIndex'
+  
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\chessboard.cpp(57,43): error C3867: 'Chessboard::stackIndex': non-standard syntax; use '&' to create a pointer to member
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\chessboard.cpp(57,43): error C2568: '++': unable to resolve function overload
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\chessboard.cpp(57,55): error C7732: expected an expression before ']'
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\chessboard.cpp(57,32): error C2597: illegal reference to non-static member 'Chessboard::stateStack'
+      C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\chessboard.cpp(57,32):
+      see declaration of 'Chessboard::stateStack'
+  
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\chessboard.cpp(57,32): error C3867: 'Chessboard::stateStack': non-standard syntax; use '&' to create a pointer to member
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\chessboard.cpp(57,32): error C2568: '[': unable to resolve function overload
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\chessboard.cpp(59,39): error C2065: 'move': undeclared identifier
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\chessboard.cpp(60,37): error C2065: 'move': undeclared identifier
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\chessboard.cpp(61,39): error C2065: 'move': undeclared identifier
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\chessboard.cpp(65,26): error C2597: illegal reference to non-static member 'Chessboard::stackIndex'
+      C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\chessboard.h(56,6):
+      see declaration of 'Chessboard::stackIndex'
+  
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\chessboard.cpp(65,15): error C2597: illegal reference to non-static member 'Chessboard::stateStack'
+      C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\chessboard.cpp(65,15):
+      see declaration of 'Chessboard::stateStack'
+  
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\chessboard.cpp(65,15): error C3867: 'Chessboard::stateStack': non-standard syntax; use '&' to create a pointer to member
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\chessboard.cpp(65,15): error C2568: '[': unable to resolve function overload
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\chessboard.cpp(65,76): error C2597: illegal reference to non-static member 'Chessboard::stackIndex'
+      C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\chessboard.h(56,6):
+      see declaration of 'Chessboard::stackIndex'
+  
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\chessboard.cpp(65,65): error C2597: illegal reference to non-static member 'Chessboard::stateStack'
+      C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\chessboard.cpp(65,65):
+      see declaration of 'Chessboard::stateStack'
+  
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\chessboard.cpp(65,65): error C3867: 'Chessboard::stateStack': non-standard syntax; use '&' to create a pointer to member
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\chessboard.cpp(65,65): error C2568: '[': unable to resolve function overload
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\chessboard.cpp(71,2): error C2059: syntax error: '}'
 C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\main.cpp(81,44): warning C4244: 'argument': conversion from 'int' to 'GLfloat', possible loss of data
 C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\main.cpp(81,41): warning C4244: 'argument': conversion from 'int' to 'GLfloat', possible loss of data
 C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\main.cpp(82,52): warning C4244: 'argument': conversion from 'int' to 'GLfloat', possible loss of data
@@ -48,4 +105,4 @@ C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\main.cpp(154,58): warning C424
 C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\main.cpp(154,23): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
 C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\main.cpp(211,15): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
 C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\main.cpp(212,15): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
-  Chess w DL.vcxproj -> C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\x64\Debug\Chess_DL.exe
+  Generating Code...
