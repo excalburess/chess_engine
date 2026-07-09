@@ -17,17 +17,58 @@
 #define BLACK_KING 11
 #define EMPTY 12
 
+//interfaces w turns easier
+
+#define WHITE 13
+#define BLACK 14
+
+struct Move
+{
+	std::uint8_t from;
+	std::uint8_t to;
+	std::uint8_t promotion;
+};
+
+
+
+struct BoardState //access specifier = public, any member of struct accessible outside of struct unless we make members private
+{
+	//bitboard for every piece
+	std::uint64_t bitboards[12];
+
+	//management of the castle process
+	bool WKC, BKC, WQC, BQC;
+
+	//management of enpassant targets
+	std::uint64_t enpassantTarget;
+		
+	//turn choosing
+	std::uint8_t turn;
+
+};
+
 
 class Chessboard
 {
 private:
-	std::uint64_t bitboards[12]; //most efficient storage for chess board (over [][]). 1 and certain bit = occupation of specific piece, generic long int doesnt guarantee 64 bit
+	
+	BoardState* stateStack;
+	int stackIndex;
+
 public: 
 	//set and get piece
 	std::uint8_t getPiece(std::uint8_t square);
-	void setPiece(std::uint8_t piece, std::uint8_t square);
+	void setPiece(std::uint8_t piece, std::uint8_t square);	
+
+	//move and undo
+	void move(const Move& move); //pass by const reference (address of move) 
+	void Undo();
+
 
 	//default constructor (defines chessboard starting state) no return type
 	Chessboard();
+
+	//destructor
+	~Chessboard();
 	
 };
