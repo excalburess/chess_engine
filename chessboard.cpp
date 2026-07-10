@@ -84,7 +84,7 @@ void Chessboard::Undo()
 {
 	if (stackIndex > 0)
 	{
-		stackIndex--;
+		--stackIndex;
 	}
 }
 
@@ -117,6 +117,7 @@ Chessboard::Chessboard()
 	stateStack[0].WKC = false;
 	stateStack[0].BQC = false;
 
+	stateStack[0].turn = WHITE;
 
 }
 
