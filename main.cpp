@@ -29,6 +29,10 @@ int select_x = -1;
 int select_y = -1;
 
 
+Move moveStack[1000];
+int moveIndex = 0;
+
+
 
 //file loading
 GLuint loadTexture(const char *filename)
@@ -208,17 +212,23 @@ void mouse(int button, int state, int x, int y)
 	if (state == GLUT_DOWN && button == GLUT_LEFT_BUTTON)
 	{
 		//get coords of board click (square)
-		int click_x = floor((x - square_x) / square_size); //floor select max value less than or equal to expression. This essentially shifts coords relative to grids top left corner instead of origin
-		int click_y = floor((y - square_y) / square_size); // square_size = how many squares accross is it as a float. floor just truncates in case we are in middle of square
+		int click_x = floor((x - square_x) / square_size); //This essentially shifts coords relative to grids top left corner instead of origin
+		int click_y = floor((y - square_y) / square_size); //square_size = how many squares accross is it as a float. floor just truncates in case we are in middle of square
 
 
 		//if piece is valid lets move it
 		if (select_x < 8 && select_x >= 0 && select_y < 8 && select_y >= 0 && game.getPiece(select_x + 8 * select_y) != EMPTY)
-		{																														//since get piece takes a square in and we use 1 << square as the array is from 0-64
-			if (click_x >= 0 && click_x < 8 && click_y >= 0 && click_y < 8)														//getPiece (2,2) would be at array position 2 x and 2 y meaning 2*8 = 16 + 2 = 18																																  
-			{																													//1 << 18 = 17 which is @ position 2, 2 on bitboard taking element there
-				game.setPiece(click_x + 8 * click_y, game.getPiece(select_x + 8 * select_y));
-				game.setPiece(select_x + 8 * select_y, EMPTY);
+		{																														
+			if (click_x >= 0 && click_x < 8 && click_y >= 0 && click_y < 8)																																													  
+			{																													
+				uint8_t from = select_x + 8 * select_y;
+				uint8_t to = click_x + 8 * click_y;
+
+				moveStack[moveIndex].from = from;
+				moveStack[moveIndex].to = to;
+				moveStack[moveIndex].promotion = EMPTY;
+
+				game.move(moveStack[moveIndex++]);
 			}
 
 			select_x = -1;
