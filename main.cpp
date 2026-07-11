@@ -140,6 +140,17 @@ void draw()
 
 	glEnd();
 
+	//showing the previous move
+	glLineWidth(square_size * 0.15);
+	glColor3f(0.8, 0.639, 0.118);
+	glBegin(GL_LINES);
+	glVertex2f(square_x + square_size * (moveStack[moveIndex - 1].from % 8 + 0.5), square_y + square_size * (moveStack[moveIndex - 1].from / 8 + 0.5));
+	glVertex2f(square_x + square_size * (moveStack[moveIndex - 1].to % 8 + 0.5), square_y + square_size * (moveStack[moveIndex - 1].to / 8+ 0.5));
+	glEnd();
+
+
+
+
 	for (int x = 0; x < 8; ++x)
 		for (int y = 0; y < 8; ++y)
 		{
@@ -257,6 +268,12 @@ void keydown(unsigned char key, int x, int y)
 		square_size *= -1; //square_size negative flips checkers
 
 
+	}
+
+	if (key == '\b')
+	{
+		game.Undo();
+		--moveIndex;
 	}
 
 }
