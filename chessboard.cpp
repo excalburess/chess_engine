@@ -83,6 +83,35 @@ void Chessboard::move(const Move& move)
 			stateStack[stackIndex].bitboards[WHITE_PAWN] ^= stateStack[stackIndex].enpassantTarget >> 8;
 		}
 	}
+
+	//castling
+	if (movedPiece == WHITE_KING)
+	{
+		if (moveBoard == 0x5000000000000000)
+		{
+			stateStack[stackIndex].bitboards[WHITE_ROOK] ^= 0xa000000000000000;
+		}
+		else if (moveBoard == 0x1400000000000000)
+		{
+			stateStack[stackIndex].bitboards[WHITE_ROOK] ^= 0x0900000000000000;
+		}
+	}
+	else if (movedPiece == BLACK_KING)
+	{
+		if (moveBoard == 0x000000000000050) {
+			stateStack[stackIndex].bitboards[BLACK_ROOK] ^= 0x00000000000000a0;
+		}
+		else if (moveBoard == 0x000000000000014)
+		{
+			stateStack[stackIndex].bitboards[BLACK_ROOK] ^= 0x0000000000000009;
+		}
+	}
+
+	//resets castling rights
+	if (moveBoard & 0x9000000000000000) stateStack[stackIndex].WKC = false;
+	if (moveBoard & 0x1100000000000000) stateStack[stackIndex].WQC = false;
+	if (moveBoard & 0x0000000000000090) stateStack[stackIndex].BKC = false;
+	if (moveBoard & 0x0000000000000011) stateStack[stackIndex].BQC = false;
 		
 	//enpassant target
 	if ((movedPiece == WHITE_PAWN || movedPiece == BLACK_PAWN) && abs(move.from - move.to) == 16)
@@ -93,7 +122,6 @@ void Chessboard::move(const Move& move)
 	{
 		stateStack[stackIndex].enpassantTarget = 0;
 	}
-	
 
 	//turn management
 	if (stateStack[stackIndex].turn == WHITE)
