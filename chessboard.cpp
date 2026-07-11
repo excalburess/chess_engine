@@ -1,5 +1,6 @@
 
 #include "chessboard.h"
+#include <math.h>
 
 using namespace std;
 
@@ -52,7 +53,7 @@ void Chessboard::move(const Move& move)
 		if (stateStack[stackIndex].bitboards[i] & fromBoard) 
 		{
 			stateStack[stackIndex].bitboards[i] ^= moveBoard; 
-			movedPiece = 1;
+			movedPiece = i;
 			break;
 		}
 
@@ -68,6 +69,31 @@ void Chessboard::move(const Move& move)
 		}
 		
 	}
+
+	//enpassant capture
+	if (toBoard == stateStack[stackIndex].enpassantTarget)
+	{
+		if (movedPiece == WHITE_PAWN)
+		{
+			stateStack[stackIndex].bitboards[BLACK_PAWN] ^= stateStack[stackIndex].enpassantTarget << 8;
+			
+		}
+		else if (movedPiece == BLACK_PAWN)
+		{
+			stateStack[stackIndex].bitboards[WHITE_PAWN] ^= stateStack[stackIndex].enpassantTarget >> 8;
+		}
+	}
+		
+	//enpassant target
+	if ((movedPiece == WHITE_PAWN || movedPiece == BLACK_PAWN) && abs(move.from - move.to) == 16)
+	{
+		stateStack[stackIndex].enpassantTarget = uint64_t(1) << int((move.from + move.to) * 0.5);  //uint64_t(1) sets 1 halfway square between move from and to on the "enpassant target bitboard"
+	}
+	else
+	{
+		stateStack[stackIndex].enpassantTarget = 0;
+	}
+	
 
 	//turn management
 	if (stateStack[stackIndex].turn == WHITE)
