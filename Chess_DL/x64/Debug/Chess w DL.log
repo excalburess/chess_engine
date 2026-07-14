@@ -1,2 +1,115 @@
-﻿  chessboard.cpp
+﻿  main.cpp
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\main.cpp(88,44): warning C4244: 'argument': conversion from 'int' to 'GLfloat', possible loss of data
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\main.cpp(88,41): warning C4244: 'argument': conversion from 'int' to 'GLfloat', possible loss of data
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\main.cpp(89,52): warning C4244: 'argument': conversion from 'int' to 'GLfloat', possible loss of data
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\main.cpp(89,44): warning C4244: 'argument': conversion from 'int' to 'GLfloat', possible loss of data
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\main.cpp(90,55): warning C4244: 'argument': conversion from 'int' to 'GLfloat', possible loss of data
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\main.cpp(90,45): warning C4244: 'argument': conversion from 'int' to 'GLfloat', possible loss of data
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\main.cpp(91,47): warning C4244: 'argument': conversion from 'int' to 'GLfloat', possible loss of data
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\main.cpp(91,42): warning C4244: 'argument': conversion from 'int' to 'GLfloat', possible loss of data
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\main.cpp(99,44): warning C4244: 'argument': conversion from 'int' to 'GLfloat', possible loss of data
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\main.cpp(99,41): warning C4244: 'argument': conversion from 'int' to 'GLfloat', possible loss of data
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\main.cpp(100,51): warning C4244: 'argument': conversion from 'int' to 'GLfloat', possible loss of data
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\main.cpp(100,43): warning C4244: 'argument': conversion from 'int' to 'GLfloat', possible loss of data
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\main.cpp(101,53): warning C4244: 'argument': conversion from 'int' to 'GLfloat', possible loss of data
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\main.cpp(101,43): warning C4244: 'argument': conversion from 'int' to 'GLfloat', possible loss of data
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\main.cpp(102,46): warning C4244: 'argument': conversion from 'int' to 'GLfloat', possible loss of data
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\main.cpp(102,41): warning C4244: 'argument': conversion from 'int' to 'GLfloat', possible loss of data
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\main.cpp(117,24): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\main.cpp(117,18): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\main.cpp(117,12): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\main.cpp(131,33): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\main.cpp(131,24): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\main.cpp(131,15): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\main.cpp(135,31): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\main.cpp(135,23): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\main.cpp(135,15): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\main.cpp(138,52): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\main.cpp(138,24): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\main.cpp(139,58): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\main.cpp(139,24): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\main.cpp(140,58): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\main.cpp(140,24): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\main.cpp(141,52): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\main.cpp(141,24): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\main.cpp(147,26): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\main.cpp(148,24): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\main.cpp(148,17): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\main.cpp(148,12): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\main.cpp(150,90): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\main.cpp(150,22): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\main.cpp(151,88): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\main.cpp(151,22): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\main.cpp(161,70): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\main.cpp(161,51): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\main.cpp(161,23): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\main.cpp(167,52): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\main.cpp(167,33): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\main.cpp(167,13): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\main.cpp(169,58): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\main.cpp(169,23): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\main.cpp(170,64): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\main.cpp(170,23): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\main.cpp(171,64): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\main.cpp(171,23): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\main.cpp(172,58): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\main.cpp(172,23): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\main.cpp(182,67): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\main.cpp(182,23): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\main.cpp(183,67): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\main.cpp(183,23): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\main.cpp(184,67): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\main.cpp(184,23): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\main.cpp(185,67): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\main.cpp(185,23): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\main.cpp(188,50): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\main.cpp(188,23): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\main.cpp(189,56): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\main.cpp(189,23): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\main.cpp(190,65): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\main.cpp(190,23): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\main.cpp(191,59): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\main.cpp(191,23): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\main.cpp(195,87): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\main.cpp(195,58): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\main.cpp(195,22): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\main.cpp(196,91): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\main.cpp(196,58): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\main.cpp(196,22): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\main.cpp(197,91): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\main.cpp(197,58): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\main.cpp(197,22): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\main.cpp(198,91): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\main.cpp(198,58): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\main.cpp(198,22): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\main.cpp(206,67): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\main.cpp(206,23): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\main.cpp(207,67): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\main.cpp(207,23): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\main.cpp(208,67): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\main.cpp(208,23): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\main.cpp(209,67): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\main.cpp(209,23): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\main.cpp(212,59): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\main.cpp(212,23): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\main.cpp(213,65): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\main.cpp(213,23): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\main.cpp(214,65): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\main.cpp(214,23): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\main.cpp(215,59): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\main.cpp(215,23): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\main.cpp(219,87): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\main.cpp(219,58): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\main.cpp(219,22): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\main.cpp(220,91): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\main.cpp(220,58): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\main.cpp(220,22): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\main.cpp(221,91): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\main.cpp(221,58): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\main.cpp(221,22): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\main.cpp(222,91): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\main.cpp(222,58): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\main.cpp(222,22): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\main.cpp(279,15): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\main.cpp(280,15): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
   Chess w DL.vcxproj -> C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\x64\Debug\Chess_DL.exe
