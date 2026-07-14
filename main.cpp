@@ -28,6 +28,9 @@ double square_y = board_y + board_size * 0.05; //centres grid to top left of boa
 int select_x = -1;
 int select_y = -1;
 
+//promotion variables
+int promote_x = -1;
+int promote_y = -1;
 
 Move moveStack[1000];
 int moveIndex = 0;
@@ -171,6 +174,56 @@ void draw()
 		
 	}
 
+	//promotion drawing
+	if (promote_y == 0)
+	{
+		glBegin(GL_QUADS);
+		glColor3f(1, 1, 1);
+		glVertex2f(square_x + square_size * (promote_x - 0.1), square_y - square_size * 0.1);
+		glVertex2f(square_x + square_size * (promote_x + 1.1), square_y - square_size * 0.1);
+		glVertex2f(square_x + square_size * (promote_x + 1.1), square_y + square_size * 4.1);
+		glVertex2f(square_x + square_size * (promote_x - 0.1), square_y + square_size * 4.1);
+
+		glColor3f(0, 0, 0);
+		glVertex2f(square_x + square_size * promote_x, square_y);
+		glVertex2f(square_x + square_size * (promote_x + 1), square_y);
+		glVertex2f(square_x + square_size * (promote_x + 1), square_y + square_size * 4);
+		glVertex2f(square_x + square_size * promote_x, square_y + square_size * 4);
+
+		glEnd();
+
+		drawPiece(square_x + square_size * promote_x, square_y + square_size * (promote_y), square_size, WHITE_QUEEN);
+		drawPiece(square_x + square_size * promote_x, square_y + square_size * (1 + promote_y), square_size, WHITE_BISHOP);
+		drawPiece(square_x + square_size * promote_x, square_y + square_size * (2 + promote_y), square_size, WHITE_KNIGHT);
+		drawPiece(square_x + square_size * promote_x, square_y + square_size * (3 + promote_y), square_size, WHITE_ROOK);
+
+	}
+
+	if (promote_y == 7)
+	{
+		glBegin(GL_QUADS);
+		glColor3f(0, 0, 0);
+		glVertex2f(square_x + square_size * (promote_x - 0.1), square_y + square_size * 8.1);
+		glVertex2f(square_x + square_size * (promote_x + 1.1), square_y + square_size * 8.1);
+		glVertex2f(square_x + square_size * (promote_x + 1.1), square_y + square_size * 3.9);
+		glVertex2f(square_x + square_size * (promote_x - 0.1), square_y + square_size * 3.9);
+
+		glColor3f(1, 1, 1);	
+		glVertex2f(square_x + square_size * promote_x, square_y + square_size * 8);
+		glVertex2f(square_x + square_size * (promote_x + 1), square_y + square_size * 8);
+		glVertex2f(square_x + square_size * (promote_x + 1), square_y + square_size * 4);
+		glVertex2f(square_x + square_size * promote_x, square_y + square_size * 4);
+
+		glEnd();
+
+		drawPiece(square_x + square_size * promote_x, square_y + square_size * (promote_y), square_size, BLACK_QUEEN);
+		drawPiece(square_x + square_size * promote_x, square_y + square_size * (promote_y - 1), square_size, BLACK_BISHOP);
+		drawPiece(square_x + square_size * promote_x, square_y + square_size * (promote_y - 2), square_size, BLACK_KNIGHT);
+		drawPiece(square_x + square_size * promote_x, square_y + square_size * (promote_y - 3), square_size, BLACK_ROOK);
+
+	}
+
+
 	glutSwapBuffers();
 }
 
@@ -226,6 +279,52 @@ void mouse(int button, int state, int x, int y)
 		int click_x = floor((x - square_x) / square_size); //This essentially shifts coords relative to grids top left corner instead of origin
 		int click_y = floor((y - square_y) / square_size); //square_size = how many squares accross is it as a float. floor just truncates in case we are in middle of square
 
+		if (promote_y == 0)
+		{
+			if (click_x == promote_x)
+			{
+				uint8_t promotion = EMPTY;
+				if (click_y == 0) promotion = WHITE_QUEEN;
+				if (click_y == 1) promotion = WHITE_BISHOP;
+				if (click_y == 2) promotion = WHITE_KNIGHT;
+				if (click_y == 3) promotion = WHITE_ROOK;
+				
+				if (promotion != EMPTY)
+				{
+					moveStack[moveIndex - 1].promotion = promotion;
+					game.Undo();
+					game.move(moveStack[moveIndex - 1]);
+
+					promote_x = -1;
+					promote_y = -1;
+				}
+
+			}
+			
+		}
+		if (promote_y == 7)
+		{
+			if (click_x == promote_x)
+			{
+				uint8_t promotion = EMPTY;
+				if (click_y == 7) promotion = BLACK_QUEEN;
+				if (click_y == 6) promotion = BLACK_BISHOP;
+				if (click_y == 5) promotion = BLACK_KNIGHT;
+				if (click_y == 4) promotion = BLACK_ROOK;
+
+				if (promotion != EMPTY)
+				{
+					moveStack[moveIndex - 1].promotion = promotion;
+					game.Undo();
+					game.move(moveStack[moveIndex - 1]);
+
+					promote_x = -1;
+					promote_y = -1;
+				}
+
+			}
+
+		}
 
 		//if piece is valid lets move it
 		if (select_x < 8 && select_x >= 0 && select_y < 8 && select_y >= 0 && game.getPiece(select_x + 8 * select_y) != EMPTY)
@@ -240,6 +339,17 @@ void mouse(int button, int state, int x, int y)
 				moveStack[moveIndex].promotion = EMPTY;
 
 				game.move(moveStack[moveIndex++]);
+
+				if (click_y == 7 && game.getPiece(to) == BLACK_PAWN || click_y == 0 && game.getPiece(to) == WHITE_PAWN)
+				{
+					promote_x = click_x;
+					promote_y = click_y;
+				}
+				else
+				{
+					promote_x = -1;
+					promote_y = -1;
+				}
 			}
 
 			select_x = -1;

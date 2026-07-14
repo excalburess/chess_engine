@@ -107,6 +107,13 @@ void Chessboard::move(const Move& move)
 		}
 	}
 
+	//promotion
+	if (move.promotion != EMPTY)
+	{
+		stateStack[stackIndex].bitboards[stateStack[stackIndex].turn == WHITE ? WHITE_PAWN : BLACK_PAWN] ^= toBoard; //clears pawn bit at destination square
+		stateStack[stackIndex].bitboards[move.promotion] ^= toBoard;	//sets the bit to promoted piece @ the same square.
+	}
+
 	//resets castling rights
 	if (moveBoard & 0x9000000000000000) stateStack[stackIndex].WKC = false;
 	if (moveBoard & 0x1100000000000000) stateStack[stackIndex].WQC = false;
