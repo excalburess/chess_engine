@@ -1,5 +1,6 @@
 
 #include "chessboard.h"
+#include "bitops.h"
 #include <math.h>
 
 using namespace std;
@@ -31,6 +32,11 @@ void Chessboard::setPiece(uint8_t piece, uint8_t square)
 			stateStack[stackIndex].bitboards[i] &= ~mask; 
 		}
 
+}
+
+uint8_t Chessboard::turn()
+{
+	return stateStack[stackIndex].turn;
 }
 
 
@@ -147,6 +153,57 @@ void Chessboard::Undo()
 	{
 		--stackIndex;
 	}
+}
+
+void Chessboard::pseudoMoves(Move* moves, int& numMoves)
+{
+	numMoves = 0;
+
+	//bitboards to track move possibilities
+	uint64_t whiteboard = 0;
+	uint64_t blackboard = 0;
+
+	for (int i = 0; i < 6; ++i)
+	{
+		whiteboard |= stateStack[stackIndex].bitboards[i];
+	}
+	for (int i = 6; i < 12; ++i)
+	{
+		blackboard |= stateStack[stackIndex].bitboards[i];
+	}
+
+	uint64_t board = whiteboard | blackboard;
+
+	//white move generation
+	if (stateStack[stackIndex].turn == WHITE)
+	{
+		//pawn move generation
+		uint64_t wpb = (stateStack[stackIndex].bitboards[WHITE_PAWN] >> 8) & ~board;
+
+	}
+
+	//black move generation
+	if (stateStack[stackIndex].turn == BLACK)
+	{
+
+	}
+}
+
+bool Chessboard::isLegal(const Move& move)
+{
+	Move moves[218];  //generate a moves buffer a bit like the stack index
+	int NumMoves; //keeps track of which moves 
+	pseudoMoves(moves, NumMoves);
+
+	for (int i = 0; i < NumMoves; ++i)
+	{
+		if (move == moves[i])  //checks if move we are checking matches any of the pseudoMoves (compiler cant check if two instances of moves are different) -> need overloading 
+			{
+			return i;
+			} 
+	}
+
+	return false;
 }
 
 
