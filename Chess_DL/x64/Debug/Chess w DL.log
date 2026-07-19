@@ -1,2 +1,8 @@
 ﻿  chessboard.cpp
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\bitops.h(18,9): warning C4244: 'return': conversion from 'unsigned long' to 'uint8_t', possible loss of data
+  (compiling source file 'chessboard.cpp')
+  
+C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\bitops.h(43,9): warning C4244: 'return': conversion from 'unsigned long' to 'uint8_t', possible loss of data
+  (compiling source file 'chessboard.cpp')
+  
   Chess w DL.vcxproj -> C:\Users\noahc\source\repos\Chess w DL\chess_w_dl\x64\Debug\Chess_DL.exe
