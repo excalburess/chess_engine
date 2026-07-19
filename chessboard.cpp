@@ -178,15 +178,32 @@ void Chessboard::pseudoMoves(Move* moves, int& numMoves)
 	if (stateStack[stackIndex].turn == WHITE)
 	{
 		//pawn move generation
-		uint64_t wpb = (stateStack[stackIndex].bitboards[WHITE_PAWN] >> 8) & ~board;
-
+		uint64_t wpb = (stateStack[stackIndex].bitboards[WHITE_PAWN] >> 8) & ~board; //1 on bitboard where can move and 0 where occupied (in front of pawn move 1 check)
+		uint8_t square;
+		while (wpb)
+		{
+			square = lsbIndex(wpb); //finds a set bit at the lowest location (doesnt matter on position)
+			wpb &= wpb - 1; // clear lowest set bit leave everything else to move to next pawn
+			uint8_t origin = square + 8; //keep track or origin
+			moves[numMoves++] = { origin, square, EMPTY }; //(maps to move struct with from to and promotion) (creates an new entry on stack)
+		}
 	}
 
 	//black move generation
-	if (stateStack[stackIndex].turn == BLACK)
+	else
 	{
-
+		uint64_t bpb = (stateStack[stackIndex].bitboards[BLACK_PAWN] << 8) & ~board;
+		uint8_t square;
+		while (bpb)
+		{
+			square = lsbIndex(bpb);
+			bpb &= bpb - 1;
+			uint8_t origin = square - 8;
+			moves[numMoves++] = { origin, square, EMPTY };
+		}
 	}
+
+
 }
 
 bool Chessboard::isLegal(const Move& move)

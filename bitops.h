@@ -47,8 +47,7 @@ inline std::uint8_t msbIndex(std::uint64_t x)
 	double d = (double)x;
 	std::uint64_t bits;
 	memcpy(&bits, &d, sizeof(bits));
-	return ((bits >> 52) & 0x7ff) - 1023;
-		
+	return ((bits >> 52) & 0x7ff) - 1023; //exposes mantissa to find the MSB (shift by 52)	
 #endif
 
 }
