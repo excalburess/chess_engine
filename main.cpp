@@ -174,6 +174,34 @@ void draw()
 		
 	}
 
+	//draw legal moves
+	if (select_x < 8 && select_x >= 0 && select_y < 8 && select_y >= 0)
+	{
+		for (int x = 0; x < 8; ++x)
+			for (int y = 0; y < 8; ++y)
+			{
+				Move move;
+				move.from = select_x + 8 * select_y;
+				move.to = x + 8 * y;
+				move.promotion = EMPTY;
+
+				Move promotion = move;
+				promotion.promotion = game.turn() == WHITE ? WHITE_QUEEN : BLACK_QUEEN; 
+
+				if (game.isLegal(move) || game.isLegal(promotion))
+				{
+					glColor3f(0, 1, 1);
+					glBegin(GL_QUADS);	
+					glVertex2f(square_x + square_size * x, square_y + square_size * y);
+					glVertex2f(square_x + square_size * x, square_y + square_size * (y+1));
+					glVertex2f(square_x + square_size * (x+1), square_y + square_size * (y + 1));
+					glVertex2f(square_x + square_size * (x+1), square_y + square_size * y);
+					glEnd();
+				}
+
+			}
+	}
+
 	//promotion drawing
 	if (promote_y == 0)
 	{
@@ -337,23 +365,40 @@ void mouse(int button, int state, int x, int y)
 				moveStack[moveIndex].from = from;
 				moveStack[moveIndex].to = to;
 				moveStack[moveIndex].promotion = EMPTY;
+				
+				//checks if move is legal/promotion
+				Move promotionMove = moveStack[moveIndex];
+				promotionMove.promotion = game.turn() == WHITE ? WHITE_QUEEN : BLACK_QUEEN;
 
-				game.move(moveStack[moveIndex++]);
-
-				if (click_y == 7 && game.getPiece(to) == BLACK_PAWN || click_y == 0 && game.getPiece(to) == WHITE_PAWN)
+				if (game.isLegal(moveStack[moveIndex]) || game.isLegal(promotionMove))
 				{
-					promote_x = click_x;
-					promote_y = click_y;
+					game.move(moveStack[moveIndex++]);
+
+					//pawn promotion?
+					if (click_y == 7 && game.getPiece(to) == BLACK_PAWN || click_y == 0 && game.getPiece(to) == WHITE_PAWN)
+					{
+						promote_x = click_x;
+						promote_y = click_y;
+					}
+					else
+					{
+						promote_x = -1;
+						promote_y = -1;
+					}
+
+					select_x = -1;
+					select_y = -1;
+
 				}
 				else
 				{
-					promote_x = -1;
-					promote_y = -1;
+					select_x = click_x;
+					select_y = click_y;
 				}
+				
 			}
 
-			select_x = -1;
-			select_y = -1;
+			
 		}
 
 		//otherwise select the square that was clicked
@@ -382,10 +427,12 @@ void keydown(unsigned char key, int x, int y)
 
 	if (key == '\b')
 	{
+		if (moveIndex > 0) 
+		{
 		game.Undo();
 		--moveIndex;
+		}
 	}
-
 }
 
 
