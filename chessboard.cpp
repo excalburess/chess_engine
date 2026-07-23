@@ -248,6 +248,28 @@ void Chessboard::pseudoMoves(Move* moves, int& numMoves)
 				moves[numMoves++] = { origin, square, EMPTY }; //(maps to move struct with from to and promotion) (creates an new entry on stack)
 			}
 		}
+
+
+		//white knight
+		uint64_t whiteKnightBitboard = stateStack[stackIndex].bitboards[WHITE_KNIGHT];
+		while (whiteKnightBitboard)
+		{
+			square = lsbIndex(whiteKnightBitboard);
+			whiteKnightBitboard &= whiteKnightBitboard - 1;
+
+			uint64_t knightMoves = knightAttack[square] & ~whiteboard; //1 on every square where no white piece
+			uint8_t target;
+			while (knightMoves)
+			{
+				target = lsbIndex(knightMoves);
+				knightMoves &= knightMoves - 1;
+				moves[numMoves++] = { square, target, EMPTY };
+			}
+
+
+		}
+
+
 	}
 
 	//black move generation
@@ -321,6 +343,25 @@ void Chessboard::pseudoMoves(Move* moves, int& numMoves)
 				moves[numMoves++] = { origin, square, EMPTY };
 			}
 		}
+
+		//black knight
+		uint64_t blackKnightBitboard = stateStack[stackIndex].bitboards[BLACK_KNIGHT];
+		while (blackKnightBitboard)
+		{
+			square = lsbIndex(blackKnightBitboard);
+			blackKnightBitboard &= blackKnightBitboard - 1;
+
+			uint64_t knightMoves = knightAttack[square] & ~blackboard; //1 on every square where no white piece
+			uint8_t target;
+			while (knightMoves)
+			{
+				target = lsbIndex(knightMoves);
+				knightMoves &= knightMoves - 1;
+				moves[numMoves++] = { square, target, EMPTY };
+			}
+
+
+		}
 	}
 
 }
@@ -372,6 +413,60 @@ Chessboard::Chessboard()
 	stateStack[0].BQC = false;
 
 	stateStack[0].turn = WHITE;
+
+
+
+	//generating attack boards  
+	for (int x1 = 0; x1 < 8; ++x1)
+	{
+		for (int y1 = 0; y1 < 8; ++y1)
+		{
+			uint8_t squareIndex = x1 + y1 * 8;
+			
+			//knightAttacks
+			knightAttack[squareIndex] = 0;
+			if (x1 < 7 && y1 < 6) knightAttack[squareIndex] |= uint64_t(1) << (x1 + 1 + 8 * (y1 + 2));
+			if (x1 < 6 && y1 < 7) knightAttack[squareIndex] |= uint64_t(1) << (x1 + 2 + 8 * (y1 + 1));
+			if (x1 > 0 && y1 < 6) knightAttack[squareIndex] |= uint64_t(1) << (x1 - 1 + 8 * (y1 + 2));
+			if (x1 > 1 && y1 < 7) knightAttack[squareIndex] |= uint64_t(1) << (x1 - 2 + 8 * (y1 + 1));
+			if (x1 < 6 && y1 > 0) knightAttack[squareIndex] |= uint64_t(1) << (x1 + 2 + 8 * (y1 - 1));
+			if (x1 < 7 && y1 > 1) knightAttack[squareIndex] |= uint64_t(1) << (x1 + 1 + 8 * (y1 - 2));
+			if (x1 > 1 && y1 > 0) knightAttack[squareIndex] |= uint64_t(1) << (x1 - 2 + 8 * (y1 - 1));
+			if (x1 > 0 && y1 > 1) knightAttack[squareIndex] |= uint64_t(1) << (x1 - 1 + 8 * (y1 - 2));
+
+			diagonalAttacks[squareIndex][0] = 0;
+			for (int x2 = x1 + 1, y2 = y1 + 1; x2 < 8 && y2 < 8; ++x2, ++y2) diagonalAttacks[squareIndex][0] |= uint64_t(1) << (x2 + 8 * y2);
+			diagonalAttacks[squareIndex][1] = 0;
+			for (int x2 = x1 - 1, y2 = y1 - 1; x2 >= 0 && y2 >= 0; --x2, --y2) diagonalAttacks[squareIndex][0] |= uint64_t(1) << (x2 + 8 * y2);
+			diagonalAttacks[squareIndex][2] = 0;
+			for (int x2 = x1 + 1, y2 = y1 - 1; x2 < 8 && y2 >= 0; ++x2, --y2) diagonalAttacks[squareIndex][0] |= uint64_t(1) << (x2 + 8 * y2);
+			diagonalAttacks[squareIndex][3] = 0;
+			for (int x2 = x1 - 1, y2 = y1 + 1; x2 >= 0 && y2 < 8; --x2, ++y2) diagonalAttacks[squareIndex][0] |= uint64_t(1) << (x2 + 8 * y2);
+
+			straightAttacks[squareIndex][0] = 0;
+			for (int x2 = x1 + 1; x2 < 8; ++x2) straightAttacks[squareIndex][0] |= uint64_t(1) << (x2 + 8 * y1);
+			straightAttacks[squareIndex][1] = 0;
+			for (int x2 = x1 + 1; x2 >= 0; --x2) straightAttacks[squareIndex][1] |= uint64_t(1) << (x2 + 8 * y1);
+			straightAttacks[squareIndex][2] = 0;
+			for (int y2 = y1 + 1; y2 < 8; ++y2) straightAttacks[squareIndex][2] |= uint64_t(1) << (x1 + 8 * y2);
+			straightAttacks[squareIndex][3] = 0;
+			for (int y2 = y1 - 1; y2 >= 0; --y2) straightAttacks[squareIndex][3] |= uint64_t(1) << (x1 + 8 * y2);
+
+			kingAttack[squareIndex] = 0;
+			if (x1 < 7 && y1 < 7 ) kingAttack[squareIndex] |= uint64_t(1) << (x1 + 1 + 8 * (y1 + 1));
+			if (x1 < 7) kingAttack[squareIndex] |= uint64_t(1) << (x1 + 1 + 8 * y1);
+			if (x1 < 7 && y1 > 7) kingAttack[squareIndex] |= uint64_t(1) << (x1 + 1 + 8 * (y1 - 1));
+			if (y1 < 7) kingAttack[squareIndex] |= uint64_t(1) << (x1 + 8 * (y1 + 1));
+			if (y1 > 0) kingAttack[squareIndex] |= uint64_t(1) << (x1 + 8 * (y1 - 1));
+			if (x1 > 0 && y1 < 7) kingAttack[squareIndex] |= uint64_t(1) << (x1 - 1 + 8 * (y1 + 1));
+			if (x1 > 0) kingAttack[squareIndex] |= uint64_t(1) << (x1 - 1 + 8 * y1);
+			if (x1 > 0 && y1 > 0) kingAttack[squareIndex] |= uint64_t(1) << (x1 - 1 + 8 * (y1 - 1));
+
+
+
+		}
+	}
+	
 
 }
 
