@@ -281,7 +281,23 @@ void Chessboard::pseudoMoves(Move* moves, int& numMoves)
 			for (int i = 0; i < 4; ++i)
 			{
 				diagonalMoves |= diagonalAttacks[square][i]; //extract piece positions
+				uint64_t blockedPieces = board & diagonalAttacks[square][i];
+				if (blockedPieces)
+				{
+					uint8_t blockedIndex;
+					if (i == 0 || i == 3)
+					{
+						blockedIndex = lsbIndex(blockedPieces);
+					}
+					else
+					{
+						blockedIndex = msbIndex(blockedPieces);
+					}
+					diagonalMoves &= ~diagonalAttacks[blockedIndex][i];
+				}
 			}
+			diagonalMoves &= ~whiteboard;
+
 
 			uint8_t target;
 			while (diagonalMoves)
@@ -393,10 +409,8 @@ void Chessboard::pseudoMoves(Move* moves, int& numMoves)
 				moves[numMoves++] = { square, target, EMPTY };
 			}
 
-
 		}
 
-		//diagonal moves
 		uint64_t dbb = stateStack[stackIndex].bitboards[BLACK_BISHOP] | stateStack[stackIndex].bitboards[BLACK_QUEEN];
 		while (dbb)
 		{
@@ -407,7 +421,22 @@ void Chessboard::pseudoMoves(Move* moves, int& numMoves)
 			for (int i = 0; i < 4; ++i)
 			{
 				diagonalMoves |= diagonalAttacks[square][i]; //extract piece positions
+				uint64_t blockedPieces = board & diagonalAttacks[square][i];
+				if (blockedPieces)
+				{
+					uint8_t blockedIndex;
+					if (i == 0 || i == 3)
+					{
+						blockedIndex = lsbIndex(blockedPieces);
+					}
+					else
+					{
+						blockedIndex = msbIndex(blockedPieces);
+					}
+					diagonalMoves &= ~diagonalAttacks[blockedIndex][i];
+				}
 			}
+			diagonalMoves &= ~blackboard;
 
 			uint8_t target;
 			while (diagonalMoves)
@@ -515,7 +544,7 @@ Chessboard::Chessboard()
 			straightAttacks[squareIndex][2] = 0;
 			for (int y2 = y1 + 1; y2 < 8; ++y2) straightAttacks[squareIndex][2] |= uint64_t(1) << (x1 + 8 * y2);
 			straightAttacks[squareIndex][3] = 0;
-			for (int y2 = y1 - 1; y2 >= 0; --y2) straightAttacks[squareIndex][3] |= uint64_t(1) << (x1 + 8 * y2);
+			for (int y2 = y1 + 1; y2 >= 0; --y2) straightAttacks[squareIndex][3] |= uint64_t(1) << (x1 + 8 * y2);
 
 			kingAttack[squareIndex] = 0;
 			if (x1 < 7 && y1 < 7 ) kingAttack[squareIndex] |= uint64_t(1) << (x1 + 1 + 8 * (y1 + 1));
