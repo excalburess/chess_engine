@@ -61,6 +61,11 @@ private:
 	BoardState* stateStack;
 	int stackIndex;
 
+	uint64_t knightAttack[64];
+	uint64_t diagonalAttacks[64][4];
+	uint64_t straightAttacks[64][4];
+	uint64_t kingAttack[64];
+
 public: 
 	//set and get piece
 	std::uint8_t getPiece(std::uint8_t square);
