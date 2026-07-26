@@ -269,7 +269,46 @@ void Chessboard::pseudoMoves(Move* moves, int& numMoves)
 
 		}
 
-		//diagonal moves
+
+		//straight attack
+		uint64_t sbb = stateStack[stackIndex].bitboards[WHITE_ROOK] | stateStack[stackIndex].bitboards[WHITE_QUEEN];
+		while (sbb)
+		{
+			square = lsbIndex(sbb);
+			sbb &= sbb - 1;
+
+			uint64_t straightMoves = 0;
+			for (int i = 0; i < 4; ++i)
+			{
+				straightMoves |= straightAttacks[square][i]; //extract piece positions
+				uint64_t blockedPieces = board & straightAttacks[square][i];
+				if (blockedPieces)
+				{
+					uint8_t blockedIndex;
+					if (i == 0 || i == 2) //relates to the the attack board direction ( + direction = lsb - direction = msb)
+					{
+						blockedIndex = lsbIndex(blockedPieces);
+					}
+					else
+					{
+						blockedIndex = msbIndex(blockedPieces);
+					}
+					straightMoves &= ~straightAttacks[blockedIndex][i];
+				}
+			}
+			straightMoves &= ~whiteboard;
+
+
+			uint8_t target;
+			while (straightMoves)
+			{
+				target = lsbIndex(straightMoves);
+				straightMoves &= straightMoves - 1;
+				moves[numMoves++] = { square, target, EMPTY };
+			}
+		}
+
+		//diagonal attack
 
 		uint64_t dbb = stateStack[stackIndex].bitboards[WHITE_BISHOP] | stateStack[stackIndex].bitboards[WHITE_QUEEN];
 		while (dbb)
@@ -298,7 +337,6 @@ void Chessboard::pseudoMoves(Move* moves, int& numMoves)
 			}
 			diagonalMoves &= ~whiteboard;
 
-
 			uint8_t target;
 			while (diagonalMoves)
 			{
@@ -309,6 +347,7 @@ void Chessboard::pseudoMoves(Move* moves, int& numMoves)
 		}
 
 
+	
 		//white king
 		square = lsbIndex(stateStack[stackIndex].bitboards[WHITE_KING]);
 		uint64_t whiteKingBoard = kingAttack[square] & ~whiteboard;
@@ -411,6 +450,45 @@ void Chessboard::pseudoMoves(Move* moves, int& numMoves)
 
 		}
 
+		//straight attack
+		uint64_t sbb = stateStack[stackIndex].bitboards[BLACK_ROOK] | stateStack[stackIndex].bitboards[BLACK_QUEEN];
+		while (sbb)
+		{
+			square = lsbIndex(sbb);
+			sbb &= sbb - 1;
+
+			uint64_t straightMoves = 0;
+			for (int i = 0; i < 4; ++i)
+			{
+				straightMoves |= straightAttacks[square][i]; //extract piece positions
+				uint64_t blockedPieces = board & straightAttacks[square][i];
+				if (blockedPieces)
+				{
+					uint8_t blockedIndex;
+					if (i == 0 || i == 2)
+					{
+						blockedIndex = lsbIndex(blockedPieces);
+					}
+					else
+					{
+						blockedIndex = msbIndex(blockedPieces);
+					}
+					straightMoves &= ~straightAttacks[blockedIndex][i];
+				}
+			}
+			straightMoves &= ~blackboard;
+
+
+			uint8_t target;
+			while (straightMoves)
+			{
+				target = lsbIndex(straightMoves);
+				straightMoves &= straightMoves - 1;
+				moves[numMoves++] = { square, target, EMPTY };
+			}
+		}
+
+		//diagonal moves   
 		uint64_t dbb = stateStack[stackIndex].bitboards[BLACK_BISHOP] | stateStack[stackIndex].bitboards[BLACK_QUEEN];
 		while (dbb)
 		{
@@ -446,6 +524,9 @@ void Chessboard::pseudoMoves(Move* moves, int& numMoves)
 				moves[numMoves++] = { square, target, EMPTY };
 			}
 		}
+
+
+		
 
 		//black king
 		square = lsbIndex(stateStack[stackIndex].bitboards[BLACK_KING]);
@@ -540,11 +621,11 @@ Chessboard::Chessboard()
 			straightAttacks[squareIndex][0] = 0;
 			for (int x2 = x1 + 1; x2 < 8; ++x2) straightAttacks[squareIndex][0] |= uint64_t(1) << (x2 + 8 * y1);
 			straightAttacks[squareIndex][1] = 0;
-			for (int x2 = x1 + 1; x2 >= 0; --x2) straightAttacks[squareIndex][1] |= uint64_t(1) << (x2 + 8 * y1);
+			for (int x2 = x1 - 1; x2 >= 0; --x2) straightAttacks[squareIndex][1] |= uint64_t(1) << (x2 + 8 * y1);
 			straightAttacks[squareIndex][2] = 0;
 			for (int y2 = y1 + 1; y2 < 8; ++y2) straightAttacks[squareIndex][2] |= uint64_t(1) << (x1 + 8 * y2);
 			straightAttacks[squareIndex][3] = 0;
-			for (int y2 = y1 + 1; y2 >= 0; --y2) straightAttacks[squareIndex][3] |= uint64_t(1) << (x1 + 8 * y2);
+			for (int y2 = y1 - 1; y2 >= 0; --y2) straightAttacks[squareIndex][3] |= uint64_t(1) << (x1 + 8 * y2);
 
 			kingAttack[squareIndex] = 0;
 			if (x1 < 7 && y1 < 7 ) kingAttack[squareIndex] |= uint64_t(1) << (x1 + 1 + 8 * (y1 + 1));
