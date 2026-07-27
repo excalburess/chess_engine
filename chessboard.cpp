@@ -393,7 +393,7 @@ void Chessboard::pseudoMoves(Move* moves, int& numMoves)
 		}
 
 		//pawn attacks 
-		blackPawnBoard = ((stateStack[stackIndex].bitboards[BLACK_PAWN] & 0xfefefefefefefefe) << 9) & (whiteboard | stateStack[stackIndex].enpassantTarget);
+		blackPawnBoard = ((stateStack[stackIndex].bitboards[BLACK_PAWN] & 0xfefefefefefefefe) >> 7) & (whiteboard | stateStack[stackIndex].enpassantTarget);
 		while (blackPawnBoard)
 		{
 			square = lsbIndex(blackPawnBoard);
@@ -413,7 +413,7 @@ void Chessboard::pseudoMoves(Move* moves, int& numMoves)
 		}
 
 		//pawn attacks 
-		blackPawnBoard = ((stateStack[stackIndex].bitboards[BLACK_PAWN] & 0x7f7f7f7f7f7f7f7f) << 7) & (whiteboard | stateStack[stackIndex].enpassantTarget);
+		blackPawnBoard = ((stateStack[stackIndex].bitboards[BLACK_PAWN] & 0x7f7f7f7f7f7f7f7f) >> 9) & (whiteboard | stateStack[stackIndex].enpassantTarget);
 		while (blackPawnBoard)
 		{
 			square = lsbIndex(blackPawnBoard);
@@ -526,8 +526,6 @@ void Chessboard::pseudoMoves(Move* moves, int& numMoves)
 		}
 
 
-		
-
 		//black king
 		square = lsbIndex(stateStack[stackIndex].bitboards[BLACK_KING]);
 		uint64_t blackKingBoard = kingAttack[square] & ~blackboard;
@@ -556,6 +554,186 @@ bool Chessboard::isLegal(const Move& move)
 	}
 
 	return false;
+}
+
+
+
+bool Chessboard::isAttacked(uint8_t square, uint8_t color)
+{
+	if (color == BLACK) 
+	{
+		uint64_t board = 0;
+		for (int i = 0; i < 12; ++i)
+		{
+			board |= stateStack[stackIndex].bitboards[i];
+		}
+
+		//straight Attack (is the blocking piece on a straight attack a friendly or not piece if so allow the attack)
+		uint64_t attackers = stateStack[stackIndex].bitboards[WHITE_ROOK] | stateStack[stackIndex].bitboards[WHITE_QUEEN];
+		for (int i = 0; i < 4; ++i)
+		{
+			uint64_t blockers = straightAttacks[square][i] & board;
+			if (blockers & attackers)
+			{
+				uint8_t blockerIndex;
+				if (i == 0 || i == 2)
+				{
+					blockerIndex = lsbIndex(blockers);
+				}
+				else
+				{
+					blockerIndex = msbIndex(blockers);
+				}
+
+				if (attackers & (uint64_t(1) << blockerIndex)) return true; //is nearest occupied square occupied by an attacking rook or queen if so return true ( 1 ) << is bascially a mask for a specific square
+
+			}
+		}
+
+		//diagonal pieces
+
+		attackers = stateStack[stackIndex].bitboards[WHITE_QUEEN] | stateStack[stackIndex].bitboards[WHITE_BISHOP];
+		for (int i = 0; i < 4; ++i)
+		{
+			uint64_t blockers = diagonalAttacks[square][i] & board;
+			if (blockers & attackers)
+			{
+				uint8_t blockerIndex;
+				if (i == 0 || i == 3)
+				{
+					blockerIndex = lsbIndex(blockers);
+				}
+				else
+				{
+					blockerIndex = msbIndex(blockers);
+				}
+
+				if (attackers & (uint64_t(1) << blockerIndex)) return true;
+
+			}
+		}
+
+		//attacked by a knight
+
+		attackers = stateStack[stackIndex].bitboards[WHITE_KNIGHT];
+		if (knightAttack[square] & attackers)
+		{
+			return true;
+		}
+
+		//attack by a pawn
+
+		if ((((stateStack[stackIndex].bitboards[WHITE_PAWN] & 0xfefefefefefefefe) >> 9)
+			| ((stateStack[stackIndex].bitboards[WHITE_PAWN] & 0x7f7f7f7f7f7f7f7f) >> 7))
+			& (uint64_t(1) << square))
+		{
+			return true;
+		}
+
+		//attack by king
+
+		if (stateStack[stackIndex].bitboards[WHITE_KING] & kingAttack[square])
+		{
+			return true;
+		}
+	
+	return false;
+
+	}
+
+	if (color == WHITE)
+	{
+		uint64_t board = 0;
+		for (int i = 0; i < 12; ++i)
+		{
+			board |= stateStack[stackIndex].bitboards[i];
+		}
+
+			//straight Attack (is the blocking piece on a straight attack a friendly or not piece if so allow the attack)
+		uint64_t attackers = stateStack[stackIndex].bitboards[BLACK_ROOK] | stateStack[stackIndex].bitboards[BLACK_QUEEN];
+		for (int i = 0; i < 4; ++i)
+		{
+			uint64_t blockers = straightAttacks[square][i] & board;
+			if (blockers & attackers)
+			{
+				uint8_t blockerIndex;
+				if (i == 0 || i == 2)
+				{
+					blockerIndex = lsbIndex(blockers);
+				}
+				else
+				{
+					blockerIndex = msbIndex(blockers);
+				}
+
+				if (attackers & (uint64_t(1) << blockerIndex)) return true; //is nearest occupied square occupied by an attacking rook or queen if so return true ( 1 ) << is bascially a mask for a specific square
+
+			}
+		}
+
+		//diagonal pieces
+
+		attackers = stateStack[stackIndex].bitboards[BLACK_QUEEN] | stateStack[stackIndex].bitboards[BLACK_BISHOP];
+		for (int i = 0; i < 4; ++i)
+		{
+			uint64_t blockers = diagonalAttacks[square][i] & board;
+			if (blockers & attackers)
+			{
+				uint8_t blockerIndex;
+				if (i == 0 || i == 3)
+				{
+					blockerIndex = lsbIndex(blockers);
+				}
+				else
+				{
+					blockerIndex = msbIndex(blockers);
+				}
+
+				if (attackers & (uint64_t(1) << blockerIndex)) return true;
+
+			}
+		}
+
+		//attacked by a knight
+
+		attackers = stateStack[stackIndex].bitboards[BLACK_KNIGHT];
+		if (knightAttack[square] & attackers)
+		{
+			return true;
+		}
+
+		//attack by a pawn
+
+		if ((((stateStack[stackIndex].bitboards[BLACK_PAWN] & 0xfefefefefefefefe) << 7)
+			| ((stateStack[stackIndex].bitboards[BLACK_PAWN] & 0x7f7f7f7f7f7f7f7f) << 9))
+			& (uint64_t(1) << square))
+		{
+			return true;
+		}
+			
+
+		//attack by king
+
+		if (stateStack[stackIndex].bitboards[BLACK_KING] & kingAttack[square])
+		{
+			return true;
+		}
+	}
+
+	return false;
+
+	
+}
+
+uint8_t Chessboard::wkingSquare()
+{
+	return lsbIndex(stateStack[stackIndex].bitboards[WHITE_KING]); //return type is 0 -63 because lsb index takes lsb
+}
+
+
+uint8_t Chessboard::bkingSquare()
+{
+	return lsbIndex(stateStack[stackIndex].bitboards[BLACK_KING]);
 }
 
 
@@ -640,7 +818,6 @@ Chessboard::Chessboard()
 		}
 	}
 	
-
 }
 
 Chessboard::~Chessboard()

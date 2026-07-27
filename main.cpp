@@ -143,6 +143,34 @@ void draw()
 
 	glEnd();
 
+	if (game.isAttacked(game.wkingSquare(), WHITE) == true)
+	{
+		int x = game.wkingSquare() % 8;
+		int y = game.wkingSquare() / 8;
+		glColor3f(1, 0, 1);
+		glBegin(GL_QUADS);
+		glVertex2f(square_x + square_size * x, square_y + square_size * y); //draws squares by at every y n x interval adding verticies (bottom left)
+		glVertex2f(square_x + square_size * x, square_y + square_size * (y + 1)); //topleft
+		glVertex2f(square_x + square_size * (x + 1), square_y + square_size * (y + 1)); // top right
+		glVertex2f(square_x + square_size * (x + 1), square_y + square_size * y); //bottom right
+		glEnd();
+	}
+
+	if (game.isAttacked(game.bkingSquare(), BLACK) == true)
+	{
+		int x = game.bkingSquare() % 8;
+		int y = game.bkingSquare() / 8;
+		glColor3f(1, 0, 1);
+		glBegin(GL_QUADS);
+		glVertex2f(square_x + square_size * x, square_y + square_size * y); //draws squares by at every y n x interval adding verticies (bottom left)
+		glVertex2f(square_x + square_size * x, square_y + square_size * (y + 1)); //topleft
+		glVertex2f(square_x + square_size * (x + 1), square_y + square_size * (y + 1)); // top right
+		glVertex2f(square_x + square_size * (x + 1), square_y + square_size * y); //bottom right
+		glEnd();
+
+	}
+
+
 	//showing the previous move
 	glLineWidth(square_size * 0.15);
 	glColor3f(0.8, 0.639, 0.118);
@@ -150,9 +178,6 @@ void draw()
 	glVertex2f(square_x + square_size * (moveStack[moveIndex - 1].from % 8 + 0.5), square_y + square_size * (moveStack[moveIndex - 1].from / 8 + 0.5));
 	glVertex2f(square_x + square_size * (moveStack[moveIndex - 1].to % 8 + 0.5), square_y + square_size * (moveStack[moveIndex - 1].to / 8+ 0.5));
 	glEnd();
-
-
-
 
 	for (int x = 0; x < 8; ++x)
 		for (int y = 0; y < 8; ++y)
@@ -174,6 +199,7 @@ void draw()
 		
 	}
 
+	
 	//draw legal moves
 	if (select_x < 8 && select_x >= 0 && select_y < 8 && select_y >= 0)
 	{
@@ -201,6 +227,7 @@ void draw()
 
 			}
 	}
+
 
 	//promotion drawing
 	if (promote_y == 0)

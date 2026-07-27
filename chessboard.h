@@ -81,6 +81,11 @@ public:
 	void pseudoMoves(Move* moves, int& numMoves); //quicker to generate pseudo legal moves then filter out.
 	bool isLegal(const Move& move);
 
+	//attackingmethods
+	bool isAttacked(uint8_t square, uint8_t color);
+	uint8_t wkingSquare();
+	uint8_t bkingSquare();
+
 
 	//default constructor (defines chessboard starting state) no return type
 	Chessboard();
