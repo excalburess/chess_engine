@@ -358,6 +358,9 @@ void Chessboard::pseudoMoves(Move* moves, int& numMoves)
 			moves[numMoves++] = { square, target, EMPTY };
 		}
 
+		if (stateStack[stackIndex].WKC && !(board & 0x6000000000000000) && !isAttacked(60, BLACK) && !isAttacked(61, BLACK)) moves[numMoves++] = { 60, 62, EMPTY };
+		if (stateStack[stackIndex].WQC && !(board & 0x0e00000000000000) && !isAttacked(60, BLACK) && !isAttacked(59, BLACK)) moves[numMoves++] = { 60, 58, EMPTY };
+
 	}
 
 	//black move generation
@@ -535,6 +538,9 @@ void Chessboard::pseudoMoves(Move* moves, int& numMoves)
 			blackKingBoard &= blackKingBoard - 1;
 			moves[numMoves++] = { square, target, EMPTY };
 		}
+
+		if (stateStack[stackIndex].BKC && !(board & 0x0000000000000060) && !isAttacked(4, WHITE) && !isAttacked(5, WHITE)) moves[numMoves++] = { 4, 6, EMPTY };
+		if (stateStack[stackIndex].BQC && !(board & 0x000000000000000e) && !isAttacked(4, WHITE) && !isAttacked(3, WHITE)) moves[numMoves++] = { 4, 2, EMPTY };
 	}
 
 }
@@ -549,7 +555,9 @@ bool Chessboard::isLegal(const Move& move)
 	{
 		if (move == moves[i])  //checks if move we are checking matches any of the pseudoMoves (compiler cant check if two instances of moves are different) -> need overloading 
 			{
-			return true;
+			
+
+
 			} 
 	}
 
@@ -636,10 +644,9 @@ bool Chessboard::isAttacked(uint8_t square, uint8_t color)
 		{
 			return true;
 		}
-	
-	return false;
-
+		
 	}
+
 
 	if (color == WHITE)
 	{
@@ -760,10 +767,10 @@ Chessboard::Chessboard()
 
 	stateStack[0].enpassantTarget = 0;
 
-	stateStack[0].BKC = false;
-	stateStack[0].WQC = false;
-	stateStack[0].WKC = false;
-	stateStack[0].BQC = false;
+	stateStack[0].BKC = true;
+	stateStack[0].WQC = true;
+	stateStack[0].WKC = true;
+	stateStack[0].BQC = true;
 
 	stateStack[0].turn = WHITE;
 
@@ -808,7 +815,7 @@ Chessboard::Chessboard()
 			kingAttack[squareIndex] = 0;
 			if (x1 < 7 && y1 < 7 ) kingAttack[squareIndex] |= uint64_t(1) << (x1 + 1 + 8 * (y1 + 1));
 			if (x1 < 7) kingAttack[squareIndex] |= uint64_t(1) << (x1 + 1 + 8 * y1);
-			if (x1 < 7 && y1 > 7) kingAttack[squareIndex] |= uint64_t(1) << (x1 + 1 + 8 * (y1 - 1));
+			if (x1 < 7 && y1 > 0) kingAttack[squareIndex] |= uint64_t(1) << (x1 + 1 + 8 * (y1 - 1));
 			if (y1 < 7) kingAttack[squareIndex] |= uint64_t(1) << (x1 + 8 * (y1 + 1));
 			if (y1 > 0) kingAttack[squareIndex] |= uint64_t(1) << (x1 + 8 * (y1 - 1));
 			if (x1 > 0 && y1 < 7) kingAttack[squareIndex] |= uint64_t(1) << (x1 - 1 + 8 * (y1 + 1));
