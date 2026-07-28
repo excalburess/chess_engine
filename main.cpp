@@ -143,11 +143,17 @@ void draw()
 
 	glEnd();
 
-	if (game.isAttacked(game.wkingSquare(), WHITE) == true)
+	uint8_t terminal = game.isTerminal();
+
+	if (terminal == DRAW || game.isAttacked(game.wkingSquare(), WHITE) == true)
 	{
 		int x = game.wkingSquare() % 8;
 		int y = game.wkingSquare() / 8;
-		glColor3f(1, 0, 1);
+
+		if (terminal == BLACK) glColor3f(1, 0, 0);
+		else if (terminal == DRAW) glColor3f(0, 0, 1);
+		else glColor3f(1, 0, 1);
+
 		glBegin(GL_QUADS);
 		glVertex2f(square_x + square_size * x, square_y + square_size * y); //draws squares by at every y n x interval adding verticies (bottom left)
 		glVertex2f(square_x + square_size * x, square_y + square_size * (y + 1)); //topleft
@@ -156,11 +162,13 @@ void draw()
 		glEnd();
 	}
 
-	if (game.isAttacked(game.bkingSquare(), BLACK) == true)
+	if (terminal == DRAW || game.isAttacked(game.bkingSquare(), BLACK) == true)
 	{
 		int x = game.bkingSquare() % 8;
 		int y = game.bkingSquare() / 8;
-		glColor3f(1, 0, 1);
+		if (terminal == WHITE) glColor3f(1, 0, 0);
+		else if (terminal == DRAW) glColor3f(0, 0, 1);
+		else glColor3f(1, 0, 1);
 		glBegin(GL_QUADS);
 		glVertex2f(square_x + square_size * x, square_y + square_size * y); //draws squares by at every y n x interval adding verticies (bottom left)
 		glVertex2f(square_x + square_size * x, square_y + square_size * (y + 1)); //topleft

@@ -47,6 +47,9 @@ void Chessboard::move(const Move& move)
 	stackIndex++;
 	//update top of stack with the current state
 
+	//increment halfmove when we add one to statestack
+	++stateStack[stackIndex].halfMove;
+
 	uint64_t fromBoard = uint64_t(1) << move.from; //1 in from 
 	uint64_t toBoard = uint64_t(1) << move.to; // 1 on board to move to
 	uint64_t moveBoard = fromBoard | toBoard; //1 in both to and from squares
@@ -60,10 +63,14 @@ void Chessboard::move(const Move& move)
 		{
 			stateStack[stackIndex].bitboards[i] ^= moveBoard; 
 			movedPiece = i;
+
 			break;
 		}
 
 	}
+
+	if (movedPiece == WHITE_PAWN || movedPiece == BLACK_PAWN) stateStack[stackIndex].halfMove = 0; //pawns are only pieces where changes are irreversible so moving them resets progress as board state cannot be taken back to it.
+	
 
 	//piece capture
 	for (int i = stateStack[stackIndex].turn == WHITE ? 6 : 0; i < (stateStack[stackIndex].turn == WHITE ? 11 : 5); ++i)
@@ -71,6 +78,7 @@ void Chessboard::move(const Move& move)
 		if (stateStack[stackIndex].bitboards[i] & toBoard)
 		{
 			stateStack[stackIndex].bitboards[i] ^= toBoard;
+			stateStack[stackIndex].halfMove = 0;
 			break;
 		}
 		
@@ -547,6 +555,8 @@ void Chessboard::pseudoMoves(Move* moves, int& numMoves)
 
 bool Chessboard::isLegal(const Move& move)
 {
+	if (isDraw()) return false;
+
 	Move moves[218];  //generate a moves buffer a bit like the stack index
 	int NumMoves; //keeps track of which moves 
 	pseudoMoves(moves, NumMoves);
@@ -749,6 +759,55 @@ uint8_t Chessboard::bkingSquare()
 	return lsbIndex(stateStack[stackIndex].bitboards[BLACK_KING]);
 }
 
+bool Chessboard::isDraw()
+{
+	if (stateStack[stackIndex].halfMove >= 100)
+	{
+		return true;
+	}
+	
+	return false;
+}
+
+std::uint8_t Chessboard::isTerminal()
+{
+	if (isDraw() == true)
+	{
+		return 0;
+	}
+
+	Move moves[218];
+	int numMoves;
+	pseudoMoves(moves, numMoves);
+
+
+	//check if there are legal moves to do
+	for (int i = 0; i < numMoves; ++i)
+	{
+		this->move(moves[i]);
+		bool illegal = turn() == WHITE ? isAttacked(bkingSquare(), BLACK) : isAttacked(wkingSquare(), WHITE);
+		Undo();
+
+		if (!illegal)
+		{
+			return 0;
+		}
+		
+	}
+
+	if (isAttacked(bkingSquare(), WHITE))
+	{
+		return WHITE;
+	}
+
+	if (isAttacked(wkingSquare(), BLACK))
+	{
+		return BLACK;
+	}
+	
+	return DRAW;
+}
+
 
 Chessboard::Chessboard()
 {
@@ -772,6 +831,7 @@ Chessboard::Chessboard()
 	stateStack[0].bitboards[BLACK_KING]	=	0x0000000000000010;
 
 	stateStack[0].enpassantTarget = 0;
+	stateStack[0].halfMove = 0;
 
 	stateStack[0].BKC = true;
 	stateStack[0].WQC = true;

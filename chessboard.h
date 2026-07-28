@@ -22,6 +22,9 @@
 #define WHITE 13
 #define BLACK 14
 
+//interface for terminal state detection
+#define DRAW 15
+
 struct Move
 {
 	std::uint8_t from;
@@ -50,6 +53,8 @@ struct BoardState //access specifier = public, any member of struct accessible o
 		
 	//turn choosing
 	std::uint8_t turn;
+
+	std::uint8_t halfMove;
 
 };
 
@@ -85,6 +90,12 @@ public:
 	bool isAttacked(uint8_t square, uint8_t color);
 	uint8_t wkingSquare();
 	uint8_t bkingSquare();
+
+	//start + endgame
+	bool isDraw();
+	std::uint8_t isTerminal();
+
+
 
 
 	//default constructor (defines chessboard starting state) no return type
