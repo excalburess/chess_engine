@@ -358,8 +358,8 @@ void Chessboard::pseudoMoves(Move* moves, int& numMoves)
 			moves[numMoves++] = { square, target, EMPTY };
 		}
 
-		if (stateStack[stackIndex].WKC && !(board & 0x6000000000000000) && !isAttacked(60, BLACK) && !isAttacked(61, BLACK)) moves[numMoves++] = { 60, 62, EMPTY };
-		if (stateStack[stackIndex].WQC && !(board & 0x0e00000000000000) && !isAttacked(60, BLACK) && !isAttacked(59, BLACK)) moves[numMoves++] = { 60, 58, EMPTY };
+		if (stateStack[stackIndex].WKC && !(board & 0x6000000000000000) && !isAttacked(60, WHITE) && !isAttacked(61, WHITE)) moves[numMoves++] = { 60, 62, EMPTY };
+		if (stateStack[stackIndex].WQC && !(board & 0x0e00000000000000) && !isAttacked(60, WHITE) && !isAttacked(59, WHITE)) moves[numMoves++] = { 60, 58, EMPTY };
 
 	}
 
@@ -539,8 +539,8 @@ void Chessboard::pseudoMoves(Move* moves, int& numMoves)
 			moves[numMoves++] = { square, target, EMPTY };
 		}
 
-		if (stateStack[stackIndex].BKC && !(board & 0x0000000000000060) && !isAttacked(4, WHITE) && !isAttacked(5, WHITE)) moves[numMoves++] = { 4, 6, EMPTY };
-		if (stateStack[stackIndex].BQC && !(board & 0x000000000000000e) && !isAttacked(4, WHITE) && !isAttacked(3, WHITE)) moves[numMoves++] = { 4, 2, EMPTY };
+		if (stateStack[stackIndex].BKC && !(board & 0x0000000000000060) && !isAttacked(4, BLACK) && !isAttacked(5, BLACK)) moves[numMoves++] = { 4, 6, EMPTY };
+		if (stateStack[stackIndex].BQC && !(board & 0x000000000000000e) && !isAttacked(4, BLACK) && !isAttacked(3, BLACK)) moves[numMoves++] = { 4, 2, EMPTY };
 	}
 
 }
@@ -554,16 +554,22 @@ bool Chessboard::isLegal(const Move& move)
 	for (int i = 0; i < NumMoves; ++i)
 	{
 		if (move == moves[i])  //checks if move we are checking matches any of the pseudoMoves (compiler cant check if two instances of moves are different) -> need overloading 
+		{
+			this->move(moves[i]);
+			bool illegal = turn() == WHITE ? isAttacked(bkingSquare(), BLACK) : isAttacked(wkingSquare(), WHITE);
+			Undo();
+			if (!illegal)
 			{
+				return true;
+			}
 			
-
-
-			} 
+		}
+	
 	}
 
 	return false;
-}
 
+}
 
 
 bool Chessboard::isAttacked(uint8_t square, uint8_t color)
