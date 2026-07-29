@@ -404,7 +404,7 @@ void Chessboard::pseudoMoves(Move* moves, int& numMoves)
 		}
 
 		//pawn attacks 
-		blackPawnBoard = ((stateStack[stackIndex].bitboards[BLACK_PAWN] & 0xfefefefefefefefe) >> 7) & (whiteboard | stateStack[stackIndex].enpassantTarget);
+		blackPawnBoard = ((stateStack[stackIndex].bitboards[BLACK_PAWN] & 0xfefefefefefefefe) << 9) & (whiteboard | stateStack[stackIndex].enpassantTarget);
 		while (blackPawnBoard)
 		{
 			square = lsbIndex(blackPawnBoard);
@@ -424,7 +424,7 @@ void Chessboard::pseudoMoves(Move* moves, int& numMoves)
 		}
 
 		//pawn attacks 
-		blackPawnBoard = ((stateStack[stackIndex].bitboards[BLACK_PAWN] & 0x7f7f7f7f7f7f7f7f) >> 9) & (whiteboard | stateStack[stackIndex].enpassantTarget);
+		blackPawnBoard = ((stateStack[stackIndex].bitboards[BLACK_PAWN] & 0x7f7f7f7f7f7f7f7f) << 7) & (whiteboard | stateStack[stackIndex].enpassantTarget);
 		while (blackPawnBoard)
 		{
 			square = lsbIndex(blackPawnBoard);
@@ -647,8 +647,8 @@ bool Chessboard::isAttacked(uint8_t square, uint8_t color)
 
 		//attack by a pawn
 
-		if ((((stateStack[stackIndex].bitboards[WHITE_PAWN] & 0xfefefefefefefefe) >> 9)
-			| ((stateStack[stackIndex].bitboards[WHITE_PAWN] & 0x7f7f7f7f7f7f7f7f) >> 7))
+		if ((((stateStack[stackIndex].bitboards[WHITE_PAWN] & 0xfefefefefefefefe) << 7)
+			| ((stateStack[stackIndex].bitboards[WHITE_PAWN] & 0x7f7f7f7f7f7f7f7f) << 9))
 			& (uint64_t(1) << square))
 		{
 			return true;
@@ -725,10 +725,10 @@ bool Chessboard::isAttacked(uint8_t square, uint8_t color)
 			return true;
 		}
 
-		//attack by a pawn
+		//attack by a pawn0xfefefefefefefefe
 
-		if ((((stateStack[stackIndex].bitboards[BLACK_PAWN] & 0xfefefefefefefefe) << 7)
-			| ((stateStack[stackIndex].bitboards[BLACK_PAWN] & 0x7f7f7f7f7f7f7f7f) << 9))
+		if ((((stateStack[stackIndex].bitboards[BLACK_PAWN] & 0x7f7f7f7f7f7f7f7f) << 9)
+			| ((stateStack[stackIndex].bitboards[BLACK_PAWN] & 0xfefefefefefefefe) << 7))
 			& (uint64_t(1) << square))
 		{
 			return true;
@@ -765,15 +765,30 @@ bool Chessboard::isDraw()
 	{
 		return true;
 	}
+
+	if (stateStack[stackIndex].bitboards[WHITE_PAWN] || stateStack[stackIndex].bitboards[WHITE_QUEEN] ||
+		stateStack[stackIndex].bitboards[WHITE_ROOK] || stateStack[stackIndex].bitboards[BLACK_PAWN] ||
+		stateStack[stackIndex].bitboards[BLACK_ROOK] || stateStack[stackIndex].bitboards[BLACK_QUEEN]) return false;
+	
+	uint64_t wdbb = stateStack[stackIndex].bitboards[WHITE_BISHOP] | stateStack[stackIndex].bitboards[WHITE_KNIGHT]; //white draw bitboard
+	wdbb &= wdbb - 1;
+	uint64_t bdbb = stateStack[stackIndex].bitboards[BLACK_BISHOP] | stateStack[stackIndex].bitboards[BLACK_KNIGHT];
+	bdbb &= bdbb - 1;
+
+	if (wdbb == 0 && bdbb == 0)
+	{
+		return true;
+	}
 	
 	return false;
 }
 
 std::uint8_t Chessboard::isTerminal()
 {
+
 	if (isDraw() == true)
 	{
-		return 0;
+		return DRAW;
 	}
 
 	Move moves[218];
@@ -795,12 +810,12 @@ std::uint8_t Chessboard::isTerminal()
 		
 	}
 
-	if (isAttacked(bkingSquare(), WHITE))
+	if (isAttacked(bkingSquare(), BLACK))
 	{
 		return WHITE;
 	}
 
-	if (isAttacked(wkingSquare(), BLACK))
+	if (isAttacked(wkingSquare(), WHITE))
 	{
 		return BLACK;
 	}

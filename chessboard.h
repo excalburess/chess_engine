@@ -54,7 +54,7 @@ struct BoardState //access specifier = public, any member of struct accessible o
 	//turn choosing
 	std::uint8_t turn;
 
-	std::uint8_t halfMove;
+	std::uint8_t halfMove;	
 
 };
 
