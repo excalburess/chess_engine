@@ -2,9 +2,32 @@
 #include "chessboard.h"
 #include "bitops.h"
 #include <math.h>
+#include <random>
 
 using namespace std;
 
+
+std::uint64_t Chessboard::hash()
+{
+	uint64_t hash = 0;
+	for (int i = 0; i < 12; ++i)
+	{
+		uint64_t bb = stateStack[stackIndex].bitboards[i]; //retrieve bitboard
+		while (bb)
+		{
+			hash ^= boardHash[i][lsbIndex(bb)];
+			bb &= bb - 1;
+		}
+	}
+	if (stateStack[stackIndex].enpassantTarget) hash ^= passantHash[(lsbIndex(stateStack[stackIndex].enpassantTarget))];
+	if (stateStack[stackIndex].turn == WHITE) hash ^= turnHash;
+	if (stateStack[stackIndex].BKC) hash ^= BKCHash;
+	if (stateStack[stackIndex].WKC) hash ^= WKCHash;
+	if (stateStack[stackIndex].WQC) hash ^= WQCHash;
+	if (stateStack[stackIndex].BQC) hash ^= BQCHash;
+
+	return hash;
+}
 
 
 uint8_t Chessboard::getPiece(uint8_t square)
@@ -153,6 +176,8 @@ void Chessboard::move(const Move& move)
 	{
 		stateStack[stackIndex].turn = WHITE;
 	}
+
+	stateStack[stackIndex].hash = hash();
 }
 
 void Chessboard::Undo()
@@ -766,6 +791,17 @@ bool Chessboard::isDraw()
 		return true;
 	}
 
+	int n = 0;
+	for (int i = stackIndex - 1; i >= 0; --i)
+	{
+		if (stateStack[stackIndex].hash == stateStack[i].hash) //hash collision can occur but since high quality hash most likely wont be in same game
+		{
+			++n;
+			if (n > 1) return true;
+
+		} 
+	}
+
 	if (stateStack[stackIndex].bitboards[WHITE_PAWN] || stateStack[stackIndex].bitboards[WHITE_QUEEN] ||
 		stateStack[stackIndex].bitboards[WHITE_ROOK] || stateStack[stackIndex].bitboards[BLACK_PAWN] ||
 		stateStack[stackIndex].bitboards[BLACK_ROOK] || stateStack[stackIndex].bitboards[BLACK_QUEEN]) return false;
@@ -786,7 +822,7 @@ bool Chessboard::isDraw()
 std::uint8_t Chessboard::isTerminal()
 {
 
-	if (isDraw() == true)
+	if (isDraw())
 	{
 		return DRAW;
 	}
@@ -826,6 +862,23 @@ std::uint8_t Chessboard::isTerminal()
 
 Chessboard::Chessboard()
 {
+	random_device rd;
+	mt19937_64 rng(rd()); 
+	uniform_int_distribution<uint64_t>dist(0, numeric_limits<uint64_t>::max());
+
+	for (int i = 0; i < 64; ++i)
+	{
+		passantHash[i] = dist(rng);
+		for (int j = 0; j < 12; ++j)
+		{
+			boardHash[j][i] = dist(rng);
+		}
+	}
+	turnHash = dist(rng);
+	WQCHash = dist(rng);
+	WKCHash = dist(rng);
+	BQCHash = dist(rng);
+	BKCHash = dist(rng);
 
 	stateStack = new BoardState[1000];
 	stackIndex = 0;
@@ -845,6 +898,7 @@ Chessboard::Chessboard()
 	stateStack[0].bitboards[BLACK_QUEEN]=	0x0000000000000008;
 	stateStack[0].bitboards[BLACK_KING]	=	0x0000000000000010;
 
+	stateStack[stackIndex].hash = hash(); //snapshot hash of starting board
 	stateStack[0].enpassantTarget = 0;
 	stateStack[0].halfMove = 0;
 
@@ -854,6 +908,8 @@ Chessboard::Chessboard()
 	stateStack[0].BQC = true;
 
 	stateStack[0].turn = WHITE;
+
+
 
 
 

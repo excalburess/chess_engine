@@ -56,6 +56,9 @@ struct BoardState //access specifier = public, any member of struct accessible o
 
 	std::uint8_t halfMove;	
 
+	//zobrist hashing
+	std::uint64_t hash; //hash stored on statestack with half move turn, enpassant and so on
+
 };
 
 
@@ -71,7 +74,20 @@ private:
 	uint64_t straightAttacks[64][4];
 	uint64_t kingAttack[64];
 
+	//hash stuff
+	std::uint64_t boardHash[12][64];
+	std::uint64_t passantHash[64]; // 0-63 files for enpassant
+	std::uint64_t turnHash;
+	std::uint64_t WKCHash;
+	std::uint64_t WQCHash;
+	std::uint64_t BKCHash;
+	std::uint64_t BQCHash;
+
+
 public: 
+
+	std::uint64_t hash();
+
 	//set and get piece
 	std::uint8_t getPiece(std::uint8_t square);
 	void setPiece(std::uint8_t piece, std::uint8_t square);	
