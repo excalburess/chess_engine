@@ -1,8 +1,10 @@
 #include <iostream>
 #include <GL/freeglut.h>
 #include "chessboard.h"
+#include "search.h"
 #include <GL/GL.h>
 #include <GL/GLU.h>
+
 
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
@@ -12,6 +14,8 @@ GLuint pieceTexture[12];
 using namespace std;
 
 Chessboard game;
+
+Search search;
 
 int width = 1920;
 int height = 1080;
@@ -32,10 +36,10 @@ int select_y = -1;
 int promote_x = -1;
 int promote_y = -1;
 
+uint8_t aiTurn = BLACK;
+
 Move moveStack[1000];
 int moveIndex = 0;
-
-
 
 //file loading
 GLuint loadTexture(const char *filename)
@@ -180,7 +184,7 @@ void draw()
 
 
 	//showing the previous move
-	glLineWidth(square_size * 0.15);
+	glLineWidth(abs(square_size) * 0.15);
 	glColor3f(0.8, 0.639, 0.118);
 	glBegin(GL_LINES);
 	glVertex2f(square_x + square_size * (moveStack[moveIndex - 1].from % 8 + 0.5), square_y + square_size * (moveStack[moveIndex - 1].from / 8 + 0.5));
@@ -330,6 +334,13 @@ void timer(int value)
 	//updates display at intervals
 	glutPostRedisplay();
 	glutTimerFunc(16, timer, NULL);
+	
+	if (game.turn() == aiTurn && !game.isTerminal() && promote_y != 0 && promote_y != 7)
+	{
+		draw();
+		moveStack[moveIndex++] = search.bestMove(game);
+		game.move(moveStack[moveIndex - 1]);
+	}
 }
 
 //click controls 
@@ -506,6 +517,8 @@ int main(int argc, char** argv) //draw function of board
 	glutKeyboardFunc(keydown);
 	glutTimerFunc(16, timer, NULL);
 	glutReshapeFunc(resize);
+
+	if (aiTurn == WHITE) keydown(32, 0, 0);
 
 	
 	

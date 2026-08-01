@@ -142,6 +142,7 @@
   <ItemGroup>
     <ClCompile Include="chessboard.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="search.cpp" />
     <ClCompile Include="test.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -149,7 +150,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="bestMove.h" />
+    <ClInclude Include="search.h" />
     <ClInclude Include="bitops.h" />
     <ClInclude Include="chessboard.h" />
     <ClInclude Include="stb_image.h" />

@@ -1,4 +1,4 @@
-
+#pragma once
 #include <cstdint>
 
 //object macros for easier notation in code
