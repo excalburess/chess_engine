@@ -102,6 +102,8 @@ public:
 	void pseudoMoves(Move* moves, int& numMoves); //quicker to generate pseudo legal moves then filter out.
 	bool isLegal(const Move& move);
 
+	BoardState* getState();
+
 	//attackingmethods
 	bool isAttacked(uint8_t square, uint8_t color);
 	uint8_t wkingSquare();
@@ -110,8 +112,6 @@ public:
 	//start + endgame
 	bool isDraw();
 	std::uint8_t isTerminal();
-
-
 
 
 	//default constructor (defines chessboard starting state) no return type

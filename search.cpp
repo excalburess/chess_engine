@@ -15,7 +15,7 @@ int Search::evaluate(Chessboard& board)
 		score += popcount(bitboards[i] * pieceValue[i]);
 	}
 
-	return score;
+	return score; 
 		
 
 }
@@ -32,17 +32,54 @@ Move Search::bestMove(Chessboard& board)
 	int numMoves;
 	board.pseudoMoves(moves, numMoves);
 
-	//if move is legal make it
-	while (numMoves)
+	Move bestMove = moves[0];
+	if (board.turn() == WHITE)
 	{
-		int r = rand() % numMoves;
-		board.move(moves[r]);
-		bool illegal = board.turn() == WHITE ? board.isAttacked(board.bkingSquare(), BLACK) : board.isAttacked(board.wkingSquare(), WHITE);
-		board.Undo();
-		if (!illegal) return moves[r];
-		--numMoves;
-		moves[r] = moves[numMoves];
+
+		int bestScore = -1000000000000;
+		for (int i = 0; i < 12; ++i)
+		{
+			board.move(moves[i]);
+			if (!board.isAttacked(board.wkingSquare(), WHITE))
+			{
+				int score = evaluate(board);
+				if (score > bestScore)
+				{
+					bestScore = score;
+					bestMove = moves[i];
+				}	
+				board.Undo();
+
+			}
+
+		}
+		
+
 	}
+
+	if (board.turn() == BLACK)
+	{
+		int bestScore = 1000000000000;
+		for (int i = 0; i < 12; ++i)
+		{
+			board.move(moves[i]);
+			if (!board.isAttacked(board.bkingSquare(), BLACK))
+			{
+				int score = evaluate(board);
+				if (score < bestScore);
+				{
+					bestScore = score;
+					bestMove = moves[i];
+				}
+				board.Undo();
+			}
+		}
+	}
+
+	return bestMove;
+
+
+	
 }
 
 	

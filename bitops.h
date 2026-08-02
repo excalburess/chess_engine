@@ -52,7 +52,7 @@ inline std::uint8_t msbIndex(std::uint64_t x)
 
 }
 
-inline uint8_t popcount(std::uint64_t x)
+inline uint8_t popcount(std::uint64_t x) //popcount optimisatoin for counting 1s in bitboard and adding score
 {
 #if defined(_MSC_VER)
 	return __popcnt64(x);

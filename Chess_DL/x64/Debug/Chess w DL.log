@@ -5,6 +5,9 @@ C:\Users\noahc\source\repos\chess\bitops.h(18,9): warning C4244: 'return': conve
 C:\Users\noahc\source\repos\chess\bitops.h(43,9): warning C4244: 'return': conversion from 'unsigned long' to 'uint8_t', possible loss of data
   (compiling source file 'chessboard.cpp')
   
+C:\Users\noahc\source\repos\chess\bitops.h(58,19): warning C4244: 'return': conversion from 'unsigned __int64' to 'uint8_t', possible loss of data
+  (compiling source file 'chessboard.cpp')
+  
   main.cpp
 C:\Users\noahc\source\repos\chess\main.cpp(92,44): warning C4244: 'argument': conversion from 'int' to 'GLfloat', possible loss of data
 C:\Users\noahc\source\repos\chess\main.cpp(92,41): warning C4244: 'argument': conversion from 'int' to 'GLfloat', possible loss of data
@@ -144,6 +147,19 @@ C:\Users\noahc\source\repos\chess\main.cpp(289,22): warning C4244: 'argument': c
 C:\Users\noahc\source\repos\chess\main.cpp(353,15): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
 C:\Users\noahc\source\repos\chess\main.cpp(354,15): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
   search.cpp
+C:\Users\noahc\source\repos\chess\bitops.h(18,9): warning C4244: 'return': conversion from 'unsigned long' to 'uint8_t', possible loss of data
+  (compiling source file 'search.cpp')
+  
+C:\Users\noahc\source\repos\chess\bitops.h(43,9): warning C4244: 'return': conversion from 'unsigned long' to 'uint8_t', possible loss of data
+  (compiling source file 'search.cpp')
+  
+C:\Users\noahc\source\repos\chess\bitops.h(58,19): warning C4244: 'return': conversion from 'unsigned __int64' to 'uint8_t', possible loss of data
+  (compiling source file 'search.cpp')
+  
+C:\Users\noahc\source\repos\chess\search.cpp(39,17): warning C4305: 'initializing': truncation from '__int64' to 'int'
+C:\Users\noahc\source\repos\chess\search.cpp(39,19): warning C4309: 'initializing': truncation of constant value
+C:\Users\noahc\source\repos\chess\search.cpp(62,17): warning C4305: 'initializing': truncation from '__int64' to 'int'
+C:\Users\noahc\source\repos\chess\search.cpp(62,19): warning C4309: 'initializing': truncation of constant value
+C:\Users\noahc\source\repos\chess\search.cpp(69,27): warning C4390: ';': empty controlled statement found; is this the intent?
   Generating Code...
-C:\Users\noahc\source\repos\chess\search.cpp(29,1): warning C4715: 'Search::bestMove': not all control paths return a value
   Chess w DL.vcxproj -> C:\Users\noahc\source\repos\chess\x64\Debug\Chess_DL.exe
