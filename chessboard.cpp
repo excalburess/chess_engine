@@ -57,6 +57,11 @@ void Chessboard::setPiece(uint8_t piece, uint8_t square)
 
 }
 
+BoardState* Chessboard::getState()
+{
+	return stateStack + stackIndex;
+}
+
 uint8_t Chessboard::turn()
 {
 	return stateStack[stackIndex].turn;

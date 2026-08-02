@@ -51,3 +51,21 @@ inline std::uint8_t msbIndex(std::uint64_t x)
 #endif
 
 }
+
+inline uint8_t popcount(std::uint64_t x)
+{
+#if defined(_MSC_VER)
+	return __popcnt64(x);
+#elif defined(__GNUC__) || defined(__CLANG__)
+	return __builtin_popcountll(x);
+#else
+	while (x)
+	{ 
+		x &= x - 1;
+		++count;
+	}
+	return count;
+#endif
+}
+
+
