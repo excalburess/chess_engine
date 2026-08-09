@@ -37,6 +37,7 @@ int promote_x = -1;
 int promote_y = -1;
 
 uint8_t aiTurn = BLACK;
+uint8_t aiDepth = 5;
 
 Move moveStack[1000];
 int moveIndex = 0;
@@ -338,7 +339,7 @@ void timer(int value)
 	if (game.turn() == aiTurn && !game.isTerminal() && promote_y != 0 && promote_y != 7)
 	{
 		draw();
-		moveStack[moveIndex++] = search.bestMove(game);
+		moveStack[moveIndex++] = search.bestMove(game, aiDepth);
 		game.move(moveStack[moveIndex - 1]);
 	}
 }
