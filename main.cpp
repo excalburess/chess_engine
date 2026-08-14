@@ -339,8 +339,15 @@ void timer(int value)
 	if (game.turn() == aiTurn && !game.isTerminal() && promote_y != 0 && promote_y != 7)
 	{
 		draw();
+		time_t startClock = clock();
 		moveStack[moveIndex++] = search.bestMove(game, aiDepth);
+		time_t endClock = clock();
 		game.move(moveStack[moveIndex - 1]);
+
+		//print the info
+		double elapsed_time = endClock - startClock;
+		elapsed_time /= CLOCKS_PER_SEC;
+		cout << "nodes searched per second " << search.getNodesSearched() / elapsed_time << "nps" << " ( nodes searched" << search.getNodesSearched() << ")";
 	}
 }
 

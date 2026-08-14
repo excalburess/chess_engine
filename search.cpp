@@ -22,6 +22,9 @@ int Search::evaluate(Chessboard& board)
 
 int Search::mini(Chessboard& board, int depth)
 {
+
+	++nodesSearched;
+	 
 	int terminal = board.isTerminal();
 	if (terminal)
 	{
@@ -87,7 +90,10 @@ int Search::mini(Chessboard& board, int depth)
 
 
 Move Search::bestMove(Chessboard& board, int depth)
-{
+{	 
+
+	nodesSearched = 0;
+
 	if (board.isTerminal())
 	{
 		Move fallback = { 0, 0, EMPTY }; //returns empty move struct as we need return type if nothing valid
@@ -148,6 +154,11 @@ Move Search::bestMove(Chessboard& board, int depth)
 
 
 	
+}
+
+uint64_t Search::getNodesSearched()
+{
+	return nodesSearched;
 }
 
 	

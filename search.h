@@ -5,6 +5,8 @@
 class Search
 {
 private:
+	uint64_t nodesSearched;
+
 	int evaluate(Chessboard& board);
 
 	//minimax function
@@ -12,6 +14,8 @@ private:
 
 public:
 	Move bestMove(Chessboard& board, int depth); 
+
+	uint64_t getNodesSearched();
 };
 
 
