@@ -36,6 +36,7 @@ int select_y = -1;
 int promote_x = -1;
 int promote_y = -1;
 
+bool undo = false;
 uint8_t aiTurn = BLACK;
 uint8_t aiDepth = 5;
 
@@ -295,8 +296,165 @@ void draw()
 	glutSwapBuffers();
 }
 
-//keydown decleration
-void keydown(unsigned char key, int x, int y);
+void mouse(int button, int state, int x, int y)
+{
+	if (state == GLUT_DOWN && button == GLUT_LEFT_BUTTON)
+	{
+		undo = false;
+
+		//get coords of board click (square)
+		int click_x = floor((x - square_x) / square_size); //This essentially shifts coords relative to grids top left corner instead of origin
+		int click_y = floor((y - square_y) / square_size); //square_size = how many squares accross is it as a float. floor just truncates in case we are in middle of square
+
+		if (promote_y == 0)
+		{
+			if (click_x == promote_x)
+			{
+				uint8_t promotion = EMPTY;
+				if (click_y == 0) promotion = WHITE_QUEEN;
+				if (click_y == 1) promotion = WHITE_BISHOP;
+				if (click_y == 2) promotion = WHITE_KNIGHT;
+				if (click_y == 3) promotion = WHITE_ROOK;
+
+				if (promotion != EMPTY)
+				{
+					moveStack[moveIndex - 1].promotion = promotion;
+					game.Undo();
+					game.move(moveStack[moveIndex - 1]);
+
+					promote_x = -1;
+					promote_y = -1;
+				}
+
+			}
+
+		}
+		else if (promote_y == 7)
+		{
+			if (click_x == promote_x)
+			{
+				uint8_t promotion = EMPTY;
+				if (click_y == 7) promotion = BLACK_QUEEN;
+				if (click_y == 6) promotion = BLACK_BISHOP;
+				if (click_y == 5) promotion = BLACK_KNIGHT;
+				if (click_y == 4) promotion = BLACK_ROOK;
+
+				if (promotion != EMPTY)
+				{
+					moveStack[moveIndex - 1].promotion = promotion;
+					game.Undo();
+					game.move(moveStack[moveIndex - 1]);
+
+					promote_x = -1;
+					promote_y = -1;
+				}
+
+			}
+
+		}
+
+		//if piece is valid lets move it
+		else if (select_x < 8 && select_x >= 0 && select_y < 8 && select_y >= 0 && game.getPiece(select_x + 8 * select_y) != EMPTY)
+		{
+			if (click_x >= 0 && click_x < 8 && click_y >= 0 && click_y < 8)
+			{
+				uint8_t from = select_x + 8 * select_y;
+				uint8_t to = click_x + 8 * click_y;
+
+				moveStack[moveIndex].from = from;
+				moveStack[moveIndex].to = to;
+				moveStack[moveIndex].promotion = EMPTY;
+
+				//checks if move is legal/promotion
+				Move promotionMove = moveStack[moveIndex];
+				promotionMove.promotion = game.turn() == WHITE ? WHITE_QUEEN : BLACK_QUEEN;
+
+				if (game.isLegal(moveStack[moveIndex]) || game.isLegal(promotionMove))
+				{
+					game.move(moveStack[moveIndex++]);
+
+					//pawn promotion?
+					if (click_y == 7 && game.getPiece(to) == BLACK_PAWN || click_y == 0 && game.getPiece(to) == WHITE_PAWN)
+					{
+						promote_x = click_x;
+						promote_y = click_y;
+					}
+					else
+					{
+						promote_x = -1;
+						promote_y = -1;
+					}
+
+					select_x = -1;
+					select_y = -1;
+
+				}
+				else
+				{
+					select_x = click_x;
+					select_y = click_y;
+				}
+
+			}
+
+
+		}
+
+		//otherwise select the square that was clicked
+
+		else
+
+		{
+			select_x = click_x;
+			select_y = click_y;
+		}
+	}
+
+}
+
+void keydown(unsigned char key, int x, int y)
+{
+	if (key == 27) glutLeaveMainLoop();
+	if (key == 32)
+	{
+		square_x += square_size * 8;
+		square_y += square_size * 8;
+		square_size *= -1; //square_size negative flips checkers
+
+
+	}
+
+	if (key == '\b')
+	{
+		if (moveIndex > 0)
+		{
+			game.Undo();
+			undo = true;
+			--moveIndex;
+		}
+	}
+}
+
+void timer(int value) 
+{
+	//updates display at intervals
+	glutPostRedisplay();
+	glutTimerFunc(16, timer, NULL);
+	
+	if (game.turn() == aiTurn && !game.isTerminal() && promote_y != 0 && promote_y != 7)
+	{
+		draw();
+		time_t startClock = clock();
+		moveStack[moveIndex++] = search.bestMove(game, aiDepth);
+		time_t endClock = clock();
+		game.move(moveStack[moveIndex - 1]);
+
+		//print the info
+		double elapsed_time = endClock - startClock;
+		elapsed_time /= CLOCKS_PER_SEC;
+		cout << "nodes searched per second " << search.getNodesSearched() / elapsed_time << "nps" << " ( nodes searched" << search.getNodesSearched() << ")" << endl;
+	}
+}
 
 void resize(int w, int h) { //resizes the window for chess board
 	width = w;
@@ -328,166 +486,8 @@ void resize(int w, int h) { //resizes the window for chess board
 	glLoadIdentity();
 	gluOrtho2D(0, width, height, 0);
 }
-	
-
-void timer(int value) 
-{
-	//updates display at intervals
-	glutPostRedisplay();
-	glutTimerFunc(16, timer, NULL);
-	
-	if (game.turn() == aiTurn && !game.isTerminal() && promote_y != 0 && promote_y != 7)
-	{
-		draw();
-		time_t startClock = clock();
-		moveStack[moveIndex++] = search.bestMove(game, aiDepth);
-		time_t endClock = clock();
-		game.move(moveStack[moveIndex - 1]);
-
-		//print the info
-		double elapsed_time = endClock - startClock;
-		elapsed_time /= CLOCKS_PER_SEC;
-		cout << "nodes searched per second " << search.getNodesSearched() / elapsed_time << "nps" << " ( nodes searched" << search.getNodesSearched() << ")";
-	}
-}
-
-//click controls 
-
-void mouse(int button, int state, int x, int y)
-{
-	if (state == GLUT_DOWN && button == GLUT_LEFT_BUTTON)
-	{
-		//get coords of board click (square)
-		int click_x = floor((x - square_x) / square_size); //This essentially shifts coords relative to grids top left corner instead of origin
-		int click_y = floor((y - square_y) / square_size); //square_size = how many squares accross is it as a float. floor just truncates in case we are in middle of square
-
-		if (promote_y == 0)
-		{
-			if (click_x == promote_x)
-			{
-				uint8_t promotion = EMPTY;
-				if (click_y == 0) promotion = WHITE_QUEEN;
-				if (click_y == 1) promotion = WHITE_BISHOP;
-				if (click_y == 2) promotion = WHITE_KNIGHT;
-				if (click_y == 3) promotion = WHITE_ROOK;
-				
-				if (promotion != EMPTY)
-				{
-					moveStack[moveIndex - 1].promotion = promotion;
-					game.Undo();
-					game.move(moveStack[moveIndex - 1]);
-
-					promote_x = -1;
-					promote_y = -1;
-				}
-
-			}
-			
-		}
-		if (promote_y == 7)
-		{
-			if (click_x == promote_x)
-			{
-				uint8_t promotion = EMPTY;
-				if (click_y == 7) promotion = BLACK_QUEEN;
-				if (click_y == 6) promotion = BLACK_BISHOP;
-				if (click_y == 5) promotion = BLACK_KNIGHT;
-				if (click_y == 4) promotion = BLACK_ROOK;
-
-				if (promotion != EMPTY)
-				{
-					moveStack[moveIndex - 1].promotion = promotion;
-					game.Undo();
-					game.move(moveStack[moveIndex - 1]);
-
-					promote_x = -1;
-					promote_y = -1;
-				}
-
-			}
-
-		}
-
-		//if piece is valid lets move it
-		if (select_x < 8 && select_x >= 0 && select_y < 8 && select_y >= 0 && game.getPiece(select_x + 8 * select_y) != EMPTY)
-		{																														
-			if (click_x >= 0 && click_x < 8 && click_y >= 0 && click_y < 8)																																													  
-			{																													
-				uint8_t from = select_x + 8 * select_y;
-				uint8_t to = click_x + 8 * click_y;
-
-				moveStack[moveIndex].from = from;
-				moveStack[moveIndex].to = to;
-				moveStack[moveIndex].promotion = EMPTY;
-				
-				//checks if move is legal/promotion
-				Move promotionMove = moveStack[moveIndex];
-				promotionMove.promotion = game.turn() == WHITE ? WHITE_QUEEN : BLACK_QUEEN;
-
-				if (game.isLegal(moveStack[moveIndex]) || game.isLegal(promotionMove))
-				{
-					game.move(moveStack[moveIndex++]);
-
-					//pawn promotion?
-					if (click_y == 7 && game.getPiece(to) == BLACK_PAWN || click_y == 0 && game.getPiece(to) == WHITE_PAWN)
-					{
-						promote_x = click_x;
-						promote_y = click_y;
-					}
-					else
-					{
-						promote_x = -1;
-						promote_y = -1;
-					}
-
-					select_x = -1;
-					select_y = -1;
-
-				}
-				else
-				{
-					select_x = click_x;
-					select_y = click_y;
-				}
-				
-			}
-
-			
-		}
-
-		//otherwise select the square that was clicked
-
-		else
-
-		{
-			select_x = click_x;
-			select_y = click_y;
-		}
-	}
-		
-}
-
-void keydown(unsigned char key, int x, int y)
-{
-	if (key == 27) glutLeaveMainLoop();
-	if (key == 32)
-	{
-		square_x += square_size * 8;
-		square_y += square_size * 8;
-		square_size *= -1; //square_size negative flips checkers
 
 
-	}
-
-	if (key == '\b')
-	{
-		if (moveIndex > 0) 
-		{
-		game.Undo();
-		--moveIndex;
-		}
-	}
-}
 
 
 int main(int argc, char** argv) //draw function of board
